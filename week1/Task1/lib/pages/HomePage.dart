@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:Task1/pages/RegisterPage.dart';
+import 'package:Task1/pages/MyProfilePage.dart';
+import 'package:Task1/models/Profile.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -38,7 +40,6 @@ class HomePage extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  Row(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -54,21 +55,38 @@ class HomePage extends StatelessWidget {
                         color: Colors.red,
                         textColor: Colors.white,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: BorderSide(color: Colors.red)),
+                          borderRadius: BorderRadius.circular(20),
+                          side: BorderSide(color: Colors.red),
+                        ),
                         child: Text('Pendaftaran'),
                       ),
                       SizedBox(
                         width: 10,
                       ),
                       RaisedButton(
-                        onPressed: () => {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MyProfilePage(
+                                profile: Profile.fromJson({
+                                  "name": "Mohamad Supangat",
+                                  "username": "supangat",
+                                  "email": "supangatoy@gmail.com",
+                                  "profile_image":
+                                      "https://github.com/supangatoy.png",
+                                  "password": "12345"
+                                }),
+                              ),
+                            ),
+                          );
+                        },
                         color: Colors.red,
                         textColor: Colors.white,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                             side: BorderSide(color: Colors.red)),
-                        child: Text('Edit Profile'),
+                        child: Text('My Profile'),
                       )
                     ],
                   ),
