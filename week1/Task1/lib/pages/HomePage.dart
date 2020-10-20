@@ -26,14 +26,13 @@ class HomePage extends StatelessWidget {
                       width: 200,
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
                   Text(
-                    'Selamat datang di Dapor Merah dimana kamu dapat menikmati masakan mewah ala resto bingtang 5',
+                    'Dapor Merah',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 35,
+                      color: Colors.red,
+                      fontFamily: 'ConcertOne',
                     ),
                   ),
                   SizedBox(
@@ -77,9 +76,12 @@ class HomePage extends StatelessWidget {
                     height: 30,
                   ),
                   Text(
-                    'Aplikasi ini dibuat untuk memenuhi Task 1 Week 1 Udacoding flutterBatch 3',
+                    'Aplikasi ini dibuat untuk memenuhi Task 1 Week 1 Udacoding Flutter Batch 3',
                     textAlign: TextAlign.center,
                     // style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(
+                    height: 10,
                   )
                 ],
               ),

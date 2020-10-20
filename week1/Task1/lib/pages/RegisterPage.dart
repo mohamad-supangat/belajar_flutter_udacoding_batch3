@@ -54,7 +54,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         icon: Icon(
                           Icons.remove_red_eye,
                           color: !this._obsecurePassword
-                              ? Colors.blue
+                              ? Colors.red
                               : Colors.grey,
                         ),
                         onPressed: () {
@@ -72,7 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         icon: Icon(
                           Icons.remove_red_eye,
                           color: !this._obsecurePasswordConfirmation
-                              ? Colors.blue
+                              ? Colors.red
                               : Colors.grey,
                         ),
                         onPressed: () {
@@ -88,7 +88,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         onChanged: (newValue) {},
                         value: true,
                       ),
-                      Text('Setujui ketentuan dan prasarat, Pendaftaran')
+                      Flexible(
+                        child: Text(
+                          'Setujui ketentuan dan prasarat, Pendaftaran',
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(
