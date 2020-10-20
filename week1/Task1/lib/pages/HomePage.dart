@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:Task1/pages/RegisterPage.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -42,7 +43,14 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     RaisedButton(
-                      onPressed: () => {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegisterPage(),
+                          ),
+                        );
+                      },
                       color: Colors.red,
                       textColor: Colors.white,
                       shape: RoundedRectangleBorder(
