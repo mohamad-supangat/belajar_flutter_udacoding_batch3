@@ -19,37 +19,24 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Stack(
                 children: [
                   Image.asset('assets/images/image843.png'),
-                  SafeArea(
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          child: Text(
-                            'Halaman Pendaftaran',
-                            style: TextStyle(
-                              fontFamily: 'ConcertOne',
-                              color: Colors.red,
-                              fontSize: 30,
-                              shadows: <Shadow>[
-                                Shadow(
-                                  offset: Offset(3, 3),
-                                  blurRadius: 5,
-                                  color: Colors.black87,
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
                 ],
               ),
             ),
             Container(
-              padding: EdgeInsets.fromLTRB(30, 0, 30, 10),
+              padding: EdgeInsets.fromLTRB(20, 0, 30, 10),
               child: Column(
                 children: [
+                  Text(
+                    'Halaman Pendaftaran',
+                    style: TextStyle(
+                      fontFamily: 'ConcertOne',
+                      color: Colors.red,
+                      fontSize: 35,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   TextFormField(
                     decoration: InputDecoration(labelText: 'Nama Lengkap'),
                   ),
