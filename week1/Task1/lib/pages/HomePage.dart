@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: _launchURL,
+        child: Icon(Icons.account_circle_sharp),
+      ),
       body: Column(
         children: [
           Image.asset('assets/images/image843.png'),
@@ -73,5 +78,14 @@ class HomePage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _launchURL() async {
+    const url = 'https://github.com/supangatoy';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Tidak bisa membuka url';
+    }
   }
 }
