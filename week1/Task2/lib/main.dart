@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Hantam Covid 19',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -39,6 +40,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var randomNumber = new Random();
+
+  int allCase = 500;
+  int deadCase = 100;
+  int recoverCase = 300;
+  int activeCase = 100;
+
+  String search = '';
+  String _searchTmp = '';
+
+  void _generateCase({searchText, type}) {
+    setState(() {
+      if (type == 'reset') {
+        allCase = 500;
+        deadCase = 100;
+        recoverCase = 300;
+        activeCase = 100;
+
+        search = '';
+        _searchTmp = '';
+      } else {
+        search = searchText;
+        allCase = randomNumber.nextInt(90);
+        deadCase = randomNumber.nextInt(90);
+        recoverCase = randomNumber.nextInt(90);
+        activeCase = randomNumber.nextInt(90);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,37 +101,36 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 35,
                                 ),
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
+                              SearchText(search: search),
                               Text(
-                                'Semua Kasus : ${randomNumber.nextInt(90)}',
+                                'Semua Kasus : ${allCase}',
                                 style: TextStyle(
                                   color: Colors.black87,
                                   fontSize: 20,
                                 ),
                               ),
                               Text(
-                                'Kasus kematian: ${randomNumber.nextInt(90)}',
+                                'Kasus kematian: ${deadCase}',
                                 style: TextStyle(
                                   color: Colors.red,
                                   fontSize: 20,
                                 ),
                               ),
                               Text(
-                                'Kasus sembuh : ${randomNumber.nextInt(90)}',
+                                'Kasus sembuh : ${recoverCase}',
                                 style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 20,
                                 ),
                               ),
                               Text(
-                                'Semua kasus aktiv : ${randomNumber.nextInt(90)}',
+                                'Semua kasus aktiv : ${activeCase}',
                                 style: TextStyle(
                                   color: Colors.orange,
                                   fontSize: 20,
                                 ),
                               ),
+                              MoreInformation(search: search),
                             ],
                           ),
                         ),
@@ -110,7 +138,15 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                PencarianNegara(),
+                PencarianNegara(
+                  search: search,
+                  onChanged: (newValue) {
+                    print(newValue);
+                    setState(() {
+                      _searchTmp = newValue;
+                    });
+                  },
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -121,7 +157,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                         color: Colors.red,
                         textColor: Colors.white,
-                        onPressed: () {},
+                        onPressed: () {
+                          _generateCase(type: 'search', searchText: _searchTmp);
+                        },
                         child: Text('SEARCH'),
                       ),
                     ),
@@ -135,7 +173,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                         color: Colors.red,
                         textColor: Colors.white,
-                        onPressed: () {},
+                        onPressed: () {
+                          _generateCase(type: 'reset');
+                        },
                         child: Text('ALL INFORMATION'),
                       ),
                     )
@@ -149,7 +189,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     color: Colors.red,
                     textColor: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {
+                      _generateCase(searchText: 'Srilangka', type: 'search');
+                    },
                     child: Text('Updates of Srilangka'),
                   ),
                 ),
@@ -170,6 +212,10 @@ class _HomePageState extends State<HomePage> {
 }
 
 class PencarianNegara extends StatefulWidget {
+  PencarianNegara({@required this.search, @required this.onChanged});
+  final String search;
+  final ValueChanged<String> onChanged;
+
   @override
   _PencarianNegaraState createState() => _PencarianNegaraState();
 }
@@ -180,6 +226,9 @@ class _PencarianNegaraState extends State<PencarianNegara> {
     return Padding(
       padding: EdgeInsets.all(10),
       child: TextFormField(
+        onChanged: (newValue) {
+          widget.onChanged(newValue);
+        },
         textAlign: TextAlign.center,
         decoration: InputDecoration(
           hintText: 'Pencarian Negara',
@@ -195,5 +244,65 @@ class _PencarianNegaraState extends State<PencarianNegara> {
         ),
       ),
     );
+  }
+}
+
+class SearchText extends StatelessWidget {
+  SearchText({@required this.search});
+  String search;
+
+  @override
+  Widget build(BuildContext context) {
+    if (search == '') {
+      return SizedBox(
+        height: 10,
+      );
+    } else {
+      return Column(
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            search,
+            style: TextStyle(fontSize: 20),
+          ),
+          SizedBox(
+            height: 10,
+          )
+        ],
+      );
+    }
+  }
+}
+
+class MoreInformation extends StatefulWidget {
+  MoreInformation({this.search});
+  final String search;
+  @override
+  _MoreInformationState createState() => _MoreInformationState();
+}
+
+class _MoreInformationState extends State<MoreInformation> {
+  var randomNumber = new Random();
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.search == '') {
+      return SizedBox(
+        height: 10,
+      );
+    } else {
+      return Column(
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          Text('critical : ${randomNumber.nextInt(90)}'),
+          SizedBox(height: 10),
+          Text('Kasus per bulan ${randomNumber.nextInt(90)}'),
+        ],
+      );
+    }
   }
 }
