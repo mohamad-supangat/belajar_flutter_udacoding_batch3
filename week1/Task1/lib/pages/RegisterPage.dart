@@ -8,7 +8,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   bool _obsecurePassword = true;
   bool _obsecurePasswordConfirmation = true;
-
+  bool _agree = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,8 +85,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   Row(
                     children: [
                       Checkbox(
-                        onChanged: (newValue) {},
-                        value: true,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _agree = newValue;
+                          });
+                        },
+                        value: _agree,
                       ),
                       Flexible(
                         child: Text(
