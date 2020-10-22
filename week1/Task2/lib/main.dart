@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         activeCase = 100;
 
         search = '';
-        _searchTmp = '';
+        // _searchTmp = '';
       } else {
         search = searchText;
         allCase = randomNumber.nextInt(90);
@@ -141,7 +141,6 @@ class _HomePageState extends State<HomePage> {
                 PencarianNegara(
                   search: search,
                   onChanged: (newValue) {
-                    print(newValue);
                     setState(() {
                       _searchTmp = newValue;
                     });
@@ -277,7 +276,7 @@ class SearchText extends StatelessWidget {
 }
 
 class MoreInformation extends StatefulWidget {
-  MoreInformation({this.search});
+  MoreInformation({Key key, this.search}) : super(key: key);
   final String search;
   @override
   _MoreInformationState createState() => _MoreInformationState();
@@ -285,6 +284,19 @@ class MoreInformation extends StatefulWidget {
 
 class _MoreInformationState extends State<MoreInformation> {
   var randomNumber = new Random();
+  int criticalCase = 10;
+  int monthCase = 20;
+
+  @override
+  void didUpdateWidget(MoreInformation oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.search != oldWidget.search) {
+      setState(() {
+        criticalCase = randomNumber.nextInt(90);
+        monthCase = randomNumber.nextInt(90);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -298,9 +310,9 @@ class _MoreInformationState extends State<MoreInformation> {
           SizedBox(
             height: 10,
           ),
-          Text('critical : ${randomNumber.nextInt(90)}'),
+          Text('critical : ${criticalCase}'),
           SizedBox(height: 10),
-          Text('Kasus per bulan ${randomNumber.nextInt(90)}'),
+          Text('Kasus per bulan ${monthCase}'),
         ],
       );
     }
