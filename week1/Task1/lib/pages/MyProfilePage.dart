@@ -98,6 +98,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
                   width: 150,
                   height: 150,
                   decoration: BoxDecoration(
+                    color: Colors.blueGrey[400],
                     shape: BoxShape.circle,
                     image: DecorationImage(
                       fit: BoxFit.fill,
