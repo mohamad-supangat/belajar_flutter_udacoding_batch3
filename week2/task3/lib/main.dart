@@ -10,7 +10,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // Decides which theme to show.
+      theme: ThemeData(
+        primarySwatch: Colors.brown,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       home: Scaffold(
         body: SingleChildScrollView(
           child: SafeArea(
@@ -103,6 +106,7 @@ class _CountingFormState extends State<CountingForm> {
                 height: 25,
               ),
               Card(
+                elevation: 5,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -161,10 +165,125 @@ class _CountingFormState extends State<CountingForm> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
+              CountingCardProsess(
+                dateOfBird: selectedDate,
+              )
             ],
           ),
         ],
       ),
     );
+  }
+}
+
+class CountingCardProsess extends StatefulWidget {
+  CountingCardProsess({Key key, @required this.dateOfBird}) : super(key: key);
+  DateTime dateOfBird;
+
+  @override
+  _CountingCardProsessState createState() => _CountingCardProsessState();
+}
+
+class _CountingCardProsessState extends State<CountingCardProsess> {
+  final DateTime dateNow = new DateTime.now();
+  int differenceDay = 0;
+  String ageComputed = '0 tahun 0 bulan 0 hari';
+
+  @override
+  void didUpdateWidget(CountingCardProsess oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.dateOfBird != null) {
+      setState(() {
+        // hitung total perbandingan hari
+        differenceDay = dateNow.difference(widget.dateOfBird).inDays;
+        double years = (differenceDay / 365);
+        double month = ((differenceDay % 365) / 30.5);
+        double days = ((differenceDay % 365) % 30.5);
+        ageComputed =
+            '${years.floor()} Tahun ${month.floor()} Bulan ${days.floor()} Hari';
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.dateOfBird == null) {
+      return Column(
+        children: [
+          Divider(),
+          SizedBox(
+            height: 10,
+          ),
+          Center(
+            child: Text(
+              'Aplikasi week2 Task3 udacoding flutter batch 3 | Perhitungan umur | Mohamad Supangat',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+          ),
+        ],
+      );
+    } else {
+      return Card(
+        color: Colors.brown,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
+          child: Column(
+            children: [
+              Text(
+                'Kata pakde jowo total umur kamu jika di hitung berdasarkan hari yaitu :',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                '${differenceDay.toString()} Hari',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Kalau di sederhanakan maka hasilnya :',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                ageComputed,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
   }
 }
