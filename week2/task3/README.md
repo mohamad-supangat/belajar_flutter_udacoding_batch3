@@ -19,4 +19,4 @@ samples, guidance on mobile development, and a full API reference.
 ## daftar pustaka rumus
 
 - https://gist.github.com/Sanix-Darker/b5d36c1e27f99ec8cb47b3b4231ee474#:~:text=Sanix%2DDarker%2F%5BPHP%5D,to%20Year%2C%20Month%2C%20Day%20Format&text=%24month%20%3D%20(%24convert%20%25%20365,(30%2C31)%20%3B)
--
+- https://blog.rosihanari.net/menentukan-nama-hari-pasaran-jawa-dari-tanggal-tertentu-dengan-php/

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:libcalendar/libcalendar.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(MyApp());
@@ -188,9 +190,11 @@ class CountingCardProsess extends StatefulWidget {
 }
 
 class _CountingCardProsessState extends State<CountingCardProsess> {
+  List pasaranJawa = ['Pon', 'Wage', 'Kliwon', 'Legi', 'Pahing'];
   final DateTime dateNow = new DateTime.now();
   int differenceDay = 0;
   String ageComputed = '0 tahun 0 bulan 0 hari';
+  String wetonJowo;
 
   @override
   void didUpdateWidget(CountingCardProsess oldWidget) {
@@ -204,6 +208,62 @@ class _CountingCardProsessState extends State<CountingCardProsess> {
         double days = ((differenceDay % 365) % 30.5);
         ageComputed =
             '${years.floor()} Tahun ${month.floor()} Bulan ${days.floor()} Hari';
+
+        // perhitungan pasaran jawa
+        DateTime dateDefault = DateTime(2010, 3, 1);
+        final int dateDefaultJd = fromGregorianToCJDN(
+            dateDefault.year, dateDefault.month, dateDefault.day);
+
+        final dateOfBird = widget.dateOfBird;
+        final int dateOfBirdJd = fromGregorianToCJDN(
+            dateOfBird.year, dateOfBird.month, dateOfBird.day);
+
+        int hitungWeton = (dateOfBirdJd - dateDefaultJd) % 5;
+        String hariBahasaJawa;
+        // konversi dari inggris ke jawa
+        switch (DateFormat('EEE', 'en_US').format(widget.dateOfBird)) {
+          case 'Sun':
+            {
+              hariBahasaJawa = 'Ahad';
+            }
+            break;
+          case 'Mon':
+            {
+              hariBahasaJawa = 'Senen';
+            }
+            break;
+          case 'Tue':
+            {
+              hariBahasaJawa = 'Selasa';
+            }
+            break;
+          case 'Wed':
+            {
+              hariBahasaJawa = 'Rebo';
+            }
+            break;
+          case 'Thu':
+            {
+              hariBahasaJawa = 'Kemis';
+            }
+            break;
+          case 'Fri':
+            {
+              hariBahasaJawa = 'Jemuah';
+            }
+            break;
+          case 'Sat':
+            {
+              hariBahasaJawa = 'Setu';
+            }
+            break;
+          default:
+            {
+              hariBahasaJawa = 'Tidak di ketahui';
+            }
+            break;
+        }
+        wetonJowo = '${hariBahasaJawa} ${pasaranJawa[hitungWeton]}';
       });
     }
   }
@@ -275,6 +335,28 @@ class _CountingCardProsessState extends State<CountingCardProsess> {
               ),
               Text(
                 ageComputed,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Kata pakde weton jawa kamu adalah :',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                wetonJowo,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
