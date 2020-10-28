@@ -45,14 +45,10 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.circular(25.0),
           color: Colors.red,
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              msg,
-              style: TextStyle(color: Colors.white),
-            ),
-          ],
+        child: Text(
+          msg,
+          style: TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
         ),
       ),
     );
