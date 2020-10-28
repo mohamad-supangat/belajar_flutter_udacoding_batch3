@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
     Project.fromJson({
       'image': 'assets/images/task4/logo.png',
       'judul': 'Task 4 | Login from',
-      'routeName': 'Task4Main'
+      'routeName': '/task4'
     })
   ];
 
@@ -66,16 +66,16 @@ class HomePage extends StatelessWidget {
                         ),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(20),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pushNamed(project.routeName);
+                          },
                           child: Padding(
                             padding: EdgeInsets.all(10),
                             child: Column(
                               children: [
                                 FractionallySizedBox(
                                   widthFactor: 0.8,
-                                  child: Image.asset(
-                                    'assets/images/task4/logo.png',
-                                  ),
+                                  child: Image.asset(project.image),
                                 ),
                                 Text(project.judul),
                               ],
