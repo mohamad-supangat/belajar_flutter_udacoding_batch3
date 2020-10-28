@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './pages/LoginPage.dart';
+import './pages/MyProfilePage.dart';
 
 class Task4 extends StatelessWidget {
   @override
@@ -21,6 +22,10 @@ class Task4 extends StatelessWidget {
       ),
       themeMode: ThemeMode.light,
       home: LoginPage(),
+      routes: {
+        LoginPage.routeName: (context) => LoginPage(),
+        MyProfilePage.routeName: (context) => MyProfilePage(),
+      },
     );
   }
 }

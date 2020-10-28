@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import './../models/Profile.dart';
 
 class LoginPage extends StatefulWidget {
+  static const routeName = '/loginPage';
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -200,7 +203,20 @@ class _LoginPageState extends State<LoginPage> {
                                   msg:
                                       'Username dan password yang anda masukan salah',
                                 );
-                              } else {}
+                              } else {
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  '/myProfile',
+                                  arguments: Profile.fromJson({
+                                    "name": "Mohamad Supangat",
+                                    "username": "admin",
+                                    "email": "supangatoy@gmail.com",
+                                    "profile_image":
+                                        "https://github.com/supangatoy.png",
+                                    "password": "admin"
+                                  }),
+                                );
+                              }
                             } else {
                               _showToast(
                                 type: 'error',
