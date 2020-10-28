@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="62.25259mm"
+   height="62.25259mm"
+   viewBox="0 0 62.25259 62.25259"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="BangunRuang.svg"
+   inkscape:export-filename="/home/deve/Projects/Udacoding/Logo/BangunRuang.svg.png"
+   inkscape:export-xdpi="1520.01"
+   inkscape:export-ydpi="1520.01">
+  <defs
+     id="defs2">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1204">
+      <rect
+         style="fill:#868686;fill-opacity:1;stroke:none;stroke-width:0.879216;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+         id="rect1206"
+         width="33.450893"
+         height="50.648811"
+         x="13.264413"
+         y="66.103912"
+         ry="0.95628089" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1215">
+      <rect
+         style="fill:#3dd2c6;fill-opacity:1;stroke:none;stroke-width:0.749334;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+         id="rect1217"
+         width="28.468418"
+         height="48.0089"
+         x="50.563847"
+         y="69.505699"
+         ry="0.95628089" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.59250933"
+     inkscape:cx="-379.87192"
+     inkscape:cy="115.33258"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1-3"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1600"
+     inkscape:window-height="862"
+     inkscape:window-x="0"
+     inkscape:window-y="38"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-49.342831,-48.32492)">
+    <g
+       id="g960"
+       transform="translate(-138.06276,75.204629)">
+      <g
+         inkscape:label="Layer 1"
+         id="layer1-3"
+         transform="translate(-17.157565,-65.158972)">
+        <rect
+           style="fill:#3674b1;fill-opacity:1;stroke:none;stroke-width:1.69375;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;paint-order:markers fill stroke"
+           id="rect962"
+           width="35.483055"
+           height="35.483055"
+           x="219.72453"
+           y="56.336269"
+           ry="0" />
+        <circle
+           style="font-variation-settings:normal;opacity:0.951845;vector-effect:none;fill:#d15738;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.241983;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.98;paint-order:stroke fill markers;stop-color:#000000;stop-opacity:1"
+           id="path978"
+           cx="237.77638"
+           cy="75.11869"
+           r="12.555837" />
+        <path
+           id="rect980"
+           style="fill:#54ad89;fill-opacity:1;stroke:none;stroke-width:1.2107;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;paint-order:markers fill stroke"
+           d="m 238.09988,42.635126 12.68175,25.363501 h -25.3635 z"
+           sodipodi:nodetypes="cccc" />
+      </g>
+    </g>
+  </g>
+</svg>
