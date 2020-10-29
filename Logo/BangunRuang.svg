@@ -15,8 +15,8 @@
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
    sodipodi:docname="BangunRuang.svg"
    inkscape:export-filename="/home/deve/Projects/Udacoding/Logo/BangunRuang.svg.png"
-   inkscape:export-xdpi="1520.01"
-   inkscape:export-ydpi="1520.01">
+   inkscape:export-xdpi="408.01514"
+   inkscape:export-ydpi="408.01514">
   <defs
      id="defs2">
     <clipPath
@@ -71,7 +71,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
