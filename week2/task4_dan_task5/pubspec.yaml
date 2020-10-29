@@ -54,6 +54,7 @@ flutter:
 
   assets:
     - assets/images/task4/
+    - assets/images/task5/
   
   fonts:
     - family: ConcertOne

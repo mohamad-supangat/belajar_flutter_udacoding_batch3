@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task4_dan_task5/HomePage.dart';
 import 'package:task4_dan_task5/Task4/Task4.dart';
+import 'package:task4_dan_task5/Task5/Task5.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
       home: HomePage(),
       routes: {
         '/task4': (BuildContext context) => Task4(),
+        '/task5': (BuildContext contex) => Task5(),
       },
     );
   }

@@ -7,7 +7,12 @@ class HomePage extends StatelessWidget {
     Project.fromJson({
       'image': 'assets/images/task4/logo.png',
       'judul': 'Task 4 | Login from',
-      'routeName': '/task4'
+      'routeName': '/task4',
+    }),
+    Project.fromJson({
+      'image': 'assets/images/task5/logo.png',
+      'judul': 'Task5 | Bangun Ruang',
+      'routeName': '/task5',
     })
   ];
 
