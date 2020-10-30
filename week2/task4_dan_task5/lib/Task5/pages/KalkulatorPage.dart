@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/Geometry.dart';
+import '../components/KalkulatorForm.dart';
 
 class KalkulatorPage extends StatefulWidget {
   final Geometry geometry;
@@ -10,6 +11,9 @@ class KalkulatorPage extends StatefulWidget {
 }
 
 class _KalkulatorPageState extends State<KalkulatorPage> {
+  int _currentIndex = 0;
+  final List<Widget> _children = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,32 +29,29 @@ class _KalkulatorPageState extends State<KalkulatorPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.geometry.nama,
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(widget.geometry.deskripsi),
-                      ],
-                    ),
-                  )
-                ],
-              )
+              Text(
+                widget.geometry.nama,
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(widget.geometry.deskripsi),
+              SizedBox(height: 10),
+              KalkulatorForm(
+                logo: widget.geometry.logo,
+                rumus: widget.geometry.rumus[_currentIndex],
+              ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0, // this will be set when a new tab is tapped
+        currentIndex: _currentIndex,
+        onTap: (int index) => setState(() {
+          _currentIndex = index;
+        }),
         items: widget.geometry.rumus.map((rumus) {
           return BottomNavigationBarItem(
             icon: Icon(rumus.icon),

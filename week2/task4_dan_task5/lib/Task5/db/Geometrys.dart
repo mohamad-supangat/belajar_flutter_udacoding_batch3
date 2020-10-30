@@ -12,7 +12,10 @@ final List geometrysDb = [
       Rumus(
         nama: 'Keliling',
         icon: Icons.crop_square,
-        deskripsi: 'K = 4a atau K = 4s atau K = s + s + s + s',
+        unit: 'cm',
+        deskripsi:
+            'Keliling = Sisi x 4 atau K = 4a atau K = 4s atau K = s + s + s + s',
+        formula: '%s * 4',
         field: [
           RumusField(
             nama: 'Sisi',
@@ -23,7 +26,9 @@ final List geometrysDb = [
       Rumus(
         nama: 'Luas',
         icon: Icons.aspect_ratio_outlined,
-        deskripsi: 'K = 4a atau K = 4s atau K = s + s + s + s',
+        deskripsi: 'Luas = Sisi x Sisi atau L = s x s',
+        formula: '%s * %s',
+        unit: 'cm^2',
         field: [
           RumusField(
             nama: 'Sisi',
