@@ -13,7 +13,7 @@ final segitiga = Geometry(
       icon: Icons.crop_square,
       unit: 'cm',
       deskripsi: 'K = a + b + c',
-      formula: 'a + b + c',
+      formula: '%a + %b + %c',
       field: [
         RumusField(
           nama: 'Sisi a',
