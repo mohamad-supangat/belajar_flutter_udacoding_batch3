@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="73.193451mm"
+   height="73.193451mm"
+   viewBox="0 0 73.19345 73.193451"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="persegi.svg"
+   inkscape:export-filename="/home/deve/Projects/Udacoding/week2/task4_dan_task5/assets/images/task5/persegi.png"
+   inkscape:export-xdpi="347.0256"
+   inkscape:export-ydpi="347.0256">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="231.38252"
+     inkscape:cy="179.7546"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1360"
+     inkscape:window-height="730"
+     inkscape:window-x="0"
+     inkscape:window-y="38"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-40.137249,-30.278402)">
+    <rect
+       style="opacity:0.951845;fill:none;stroke:#ff4f00;stroke-width:1.06739;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect890"
+       width="50.209255"
+       height="50.209255"
+       x="50.317966"
+       y="40.081142"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.3726px;line-height:1.25;font-family:Iosevka;-inkscape-font-specification:Iosevka;letter-spacing:0px;word-spacing:0px;fill:#ff4f00;fill-opacity:1;stroke:none;stroke-width:0.259318;"
+       x="104.45807"
+       y="67.006889"
+       id="text894"><tspan
+         sodipodi:role="line"
+         id="tspan892"
+         x="104.45807"
+         y="67.006889"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Iosevka;-inkscape-font-specification:Iosevka;fill:#ff4f00;fill-opacity:1;stroke-width:0.259318;">s</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.3726px;line-height:1.25;font-family:Iosevka;-inkscape-font-specification:Iosevka;letter-spacing:0px;word-spacing:0px;fill:#ff4f00;fill-opacity:1;stroke:none;stroke-width:0.259318;"
+       x="72.763336"
+       y="99.25499"
+       id="text898"><tspan
+         sodipodi:role="line"
+         id="tspan896"
+         x="72.763336"
+         y="99.25499"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Iosevka;-inkscape-font-specification:Iosevka;fill:#ff4f00;fill-opacity:1;stroke-width:0.259318;">s</tspan></text>
+  </g>
+</svg>
