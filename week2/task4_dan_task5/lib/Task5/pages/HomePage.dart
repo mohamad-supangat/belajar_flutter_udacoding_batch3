@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import '../db/Geometrys.dart';
+import './KalkulatorPage.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -31,16 +32,26 @@ class HomePage extends StatelessWidget {
                       lg: 3,
                       xl: 4,
                       child: Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Column(
-                            children: [
-                              Image.asset(geometry.logo),
-                              SizedBox(
-                                height: 10,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => KalkulatorPage(geometry),
                               ),
-                              Text(geometry.nama),
-                            ],
+                            );
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                Image.asset(geometry.logo),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(geometry.nama),
+                              ],
+                            ),
                           ),
                         ),
                       ),

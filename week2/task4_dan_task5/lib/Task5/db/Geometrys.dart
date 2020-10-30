@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import '../models/Geometry.dart';
 import '../models/Rumus.dart';
 
@@ -10,6 +11,18 @@ final List geometrysDb = [
     rumus: [
       Rumus(
         nama: 'Keliling',
+        icon: Icons.crop_square,
+        deskripsi: 'K = 4a atau K = 4s atau K = s + s + s + s',
+        field: [
+          RumusField(
+            nama: 'Sisi',
+            key: 's',
+          ),
+        ],
+      ),
+      Rumus(
+        nama: 'Luas',
+        icon: Icons.aspect_ratio_outlined,
         deskripsi: 'K = 4a atau K = 4s atau K = s + s + s + s',
         field: [
           RumusField(
