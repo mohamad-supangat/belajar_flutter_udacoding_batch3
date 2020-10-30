@@ -17,12 +17,13 @@ class HomePage extends StatelessWidget {
                 Text(
                   'Kalkulator Bangun Ruang',
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: Colors.blueGrey,
                     fontSize: 25,
                     fontFamily: 'ConcertOne',
                   ),
                   textAlign: TextAlign.center,
                 ),
+                Divider(),
                 ResponsiveGridRow(
                   children: geometrysDb.map((geometry) {
                     return ResponsiveGridCol(
@@ -32,6 +33,7 @@ class HomePage extends StatelessWidget {
                       lg: 3,
                       xl: 4,
                       child: Card(
+                        elevation: 3,
                         child: InkWell(
                           onTap: () {
                             Navigator.push(
@@ -57,6 +59,11 @@ class HomePage extends StatelessWidget {
                       ),
                     );
                   }).toList(),
+                ),
+                Divider(),
+                Text(
+                  'Aplikasi Task5 Mohamad. Supangat | Kalkulator perhitungan matematika',
+                  textAlign: TextAlign.center,
                 )
               ],
             ),
