@@ -36,7 +36,11 @@ class _KalkulatorFormState extends State<KalkulatorForm> {
     super.didUpdateWidget(oldWidget);
     if (widget.rumus != oldWidget.rumus) {
       setState(() {
+        _controllers = {};
         _hasil = null;
+        widget.rumus.field.forEach((field) {
+          _controllers[field.key] = TextEditingController();
+        });
       });
     }
   }
