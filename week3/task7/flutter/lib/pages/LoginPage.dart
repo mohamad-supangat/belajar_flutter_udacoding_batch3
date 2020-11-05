@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import './../models/Profile.dart';
+import 'package:task7/models/Profile.dart';
+import 'package:task7/helpers/toast.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/loginPage';
@@ -12,17 +12,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _obsecurePassword = true;
   final _formKey = GlobalKey<FormState>();
-  FToast fToast;
 
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    fToast = FToast();
-    fToast.init(context);
-  }
 
   // pengecekan form input
   String _checkValidationText() {
@@ -37,24 +29,6 @@ class _LoginPageState extends State<LoginPage> {
     else {
       return 'Validasi gagal';
     }
-  }
-
-  // fungsi untuk menampilkan toast
-  void _showToast({msg, type}) {
-    fToast.showToast(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25.0),
-          color: Colors.red,
-        ),
-        child: Text(
-          msg,
-          style: TextStyle(color: Colors.white),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
   }
 
   // proses pengecekan login
@@ -194,33 +168,11 @@ class _LoginPageState extends State<LoginPage> {
                             // cek validasi form
                             if (_formKey.currentState.validate()) {
                               // cek user login proses
-                              if (!_prosesLogin(
-                                username: _usernameController.text,
-                                password: _passwordController.text,
-                              )) {
-                                _showToast(
-                                  type: 'error',
-                                  msg:
-                                      'Username dan password yang anda masukan salah',
-                                );
-                              } else {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  '/myProfile',
-                                  arguments: Profile.fromJson({
-                                    "name": "Mohamad Supangat",
-                                    "username": "admin",
-                                    "email": "supangatoy@gmail.com",
-                                    "profile_image":
-                                        "https://github.com/supangatoy.png",
-                                    "password": "admin"
-                                  }),
-                                );
-                              }
+                              _prosesLogin();
                             } else {
-                              _showToast(
+                              $toast(
                                 type: 'error',
-                                msg: _checkValidationText(),
+                                message: _checkValidationText(),
                               );
                             }
                           },
