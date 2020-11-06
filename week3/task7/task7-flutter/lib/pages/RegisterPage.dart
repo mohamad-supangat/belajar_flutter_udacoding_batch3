@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:task7/pages/LoginPage.dart';
 import 'package:task7/helpers/toast.dart';
+import 'package:task7/helpers/api.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -37,6 +39,16 @@ class _RegisterPageState extends State<RegisterPage> {
         message:
             'Kamu belum menyetujui Syarat dan Ketentuan dan Kebijakan Privasi yang berlaku.',
       );
+    } else {
+      callApi().post('/user/register', data: {
+        'username': _usernameController.text,
+        'name': _nameController.text,
+        'email': _emailController.text,
+        'password': _passwordController.text,
+        'confirmation_password': _confirmationPasswordController.text,
+      }).then((response) {
+        print(response.data);
+      });
     }
   }
 
