@@ -1,7 +1,10 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 
-void $toast({type, message}) {
+void $toast({
+  String type,
+  String message,
+}) {
   Fluttertoast.showToast(
     msg: message,
     toastLength: Toast.LENGTH_SHORT,

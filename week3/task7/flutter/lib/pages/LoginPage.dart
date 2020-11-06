@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:task7/models/Profile.dart';
 import 'package:task7/helpers/toast.dart';
+import 'package:task7/pages/RegisterPage.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/loginPage';
@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
                         RawMaterialButton(
                           fillColor: Colors.red,
@@ -148,22 +148,32 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.chevron_right,
+                                  color: Colors.red,
+                                ),
+                              ),
                               Text(
-                                'Masuk Sekarang',
+                                'MASUK SEKARANG',
                                 style: TextStyle(
                                   fontSize: 15,
                                 ),
                               ),
                               SizedBox(
-                                width: 3,
+                                width: 10,
                               ),
-                              Icon(Icons.chevron_right),
                             ],
                           ),
-                          padding: EdgeInsets.only(right: 20, left: 20),
+                          padding: EdgeInsets.all(8),
                           onPressed: () {
                             // cek validasi form
                             if (_formKey.currentState.validate()) {
@@ -176,6 +186,29 @@ class _LoginPageState extends State<LoginPage> {
                               );
                             }
                           },
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text('Belum punya akun ?'),
+                            FlatButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      RegisterPage(),
+                                ),
+                              ),
+                              child: Text(
+                                'Daftar',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -192,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: EdgeInsets.only(right: 20, left: 20),
                   child: Text(
-                    'Aplikasi Submission week2 task4 udacoding | Login Sederhana | Mohamad Supangat',
+                    'Aplikasi Submission week3 task7 udacoding | Mohamad Supangat',
                     textAlign: TextAlign.center,
                   ),
                 )
