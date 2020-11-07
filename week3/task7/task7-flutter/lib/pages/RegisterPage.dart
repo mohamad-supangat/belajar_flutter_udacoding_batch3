@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:task7/pages/LoginPage.dart';
 import 'package:task7/helpers/toast.dart';
 import 'package:task7/helpers/api.dart';
+import 'dart:async';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -46,7 +46,13 @@ class _RegisterPageState extends State<RegisterPage> {
         'password': _passwordController.text,
         'confirmation_password': _confirmationPasswordController.text,
       }).then((response) {
-        print(response.data);
+        showToast(
+          type: response.data['status'] ? 'success' : 'error',
+          message: response.data['message'],
+        );
+        if (response.data['status']) {
+          Navigator.pushNamed(context, '/loginPage');
+        }
       });
     }
   }
@@ -202,12 +208,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => LoginPage(),
-                            ),
-                          ),
+                          onPressed: () =>
+                              Navigator.pushNamed(context, '/loginPage'),
                           child: Text(
                             'Masuk',
                             style: TextStyle(color: Colors.red),

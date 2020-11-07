@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'toast.dart';
+import 'dart:developer';
 
 Dio callApi() {
   BaseOptions options = new BaseOptions(
@@ -29,6 +30,8 @@ Dio callApi() {
             showToast(type: 'error', message: errors.first.toString());
             break;
           }
+        } else {
+          showToast(type: 'error', message: 'Terjadi kesalahan pada jaringan');
         }
         return e; //continue
       },

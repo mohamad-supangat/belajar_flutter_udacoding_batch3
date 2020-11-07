@@ -39,7 +39,7 @@ class UserController extends Controller
 
     return response()->json([
       'status'      => $proses ? true : false,
-      'message'     => 'Mendaftar', 
+      'message'     => $proses ? 'Sukes melakukan pendaftaran' : 'Gagal melakukan pendaftaran', 
     ]);
   }
   

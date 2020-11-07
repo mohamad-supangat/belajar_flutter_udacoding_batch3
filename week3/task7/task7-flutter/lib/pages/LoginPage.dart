@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:task7/helpers/toast.dart';
 import 'package:task7/pages/RegisterPage.dart';
 import 'package:task7/helpers/api.dart';
-import 'dart:developer';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/loginPage';
@@ -201,13 +200,8 @@ class _LoginPageState extends State<LoginPage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      RegisterPage(),
-                                ),
-                              ),
+                              onPressed: () =>
+                                  Navigator.pushNamed(context, '/registerPage'),
                               child: Text(
                                 'Daftar',
                                 style: TextStyle(color: Colors.red),
