@@ -63,4 +63,19 @@ class UserController extends Controller
     ]);
   }
   
+  /**
+   * Logout
+   *
+   * @return void
+   */
+  public function logout()
+  {
+    auth()->logout(true);
+    return response()->json([
+      'status'    => true,
+      'message'   => 'Sukses menghapus sesi login'
+
+    ]);
+  }
+  
 } 
