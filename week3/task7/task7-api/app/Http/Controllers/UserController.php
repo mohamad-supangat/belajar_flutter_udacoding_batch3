@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -17,6 +18,19 @@ class UserController extends Controller
     $request->validate([
       'username'      => 'required|min:5|max:20',
       'password'      => 'required|min:5|max:20',
+    ]);
+
+    $credentials = request(['username', 'password']);
+    if (! $token = auth()->attempt($credentials)) {
+      return response()->json([
+        'status'  => false,
+        'message' => 'Username / password yang anda masukan salah',
+      ]);
+    }
+
+    return response()->json([
+      'status' => true,
+      'token'  => $token
     ]);
   }
   
@@ -35,7 +49,12 @@ class UserController extends Controller
       'confirmation_password' => 'required|min:5|max:25|same:password'
     ]);
 
-    $proses = User::create($request->all());
+    $proses = User::create([
+      'username'  => $request->username,
+      'name'      => $request->name,
+      'email'     => $request->email,
+      'password'  => bcrypt($request->password),
+    ]);
 
     return response()->json([
       'status'      => $proses ? true : false,
@@ -43,4 +62,4 @@ class UserController extends Controller
     ]);
   }
   
-}
+} 
