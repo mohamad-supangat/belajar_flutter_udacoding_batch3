@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:task7/helpers/toast.dart';
 import 'package:task7/pages/RegisterPage.dart';
+import 'package:task7/helpers/api.dart';
+import 'dart:developer';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/loginPage';
@@ -32,11 +34,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   // proses pengecekan login
-  bool _prosesLogin({username, password}) {
-    if (username == 'admin' && password == 'admin')
-      return true;
-    else
-      return false;
+  void _prosesLogin() {
+    callApi().post(
+      '/user/login',
+      data: {
+        'username': _usernameController.text,
+        'password': _passwordController.text,
+      },
+    );
   }
 
   @override
@@ -176,15 +181,15 @@ class _LoginPageState extends State<LoginPage> {
                           padding: EdgeInsets.all(8),
                           onPressed: () {
                             // cek validasi form
-                            if (_formKey.currentState.validate()) {
-                              // cek user login proses
-                              _prosesLogin();
-                            } else {
-                              $toast(
-                                type: 'error',
-                                message: _checkValidationText(),
-                              );
-                            }
+                            // if (_formKey.currentState.validate()) {
+                            // cek user login proses
+                            _prosesLogin();
+                            // } else {
+                            // $toast(
+                            // type: 'error',
+                            // message: _checkValidationText(),
+                            // );
+                            // }
                           },
                         ),
                         SizedBox(height: 20),

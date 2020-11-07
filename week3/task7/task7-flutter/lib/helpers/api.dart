@@ -1,17 +1,18 @@
 import 'package:dio/dio.dart';
 import 'toast.dart';
 
-BaseOptions options = new BaseOptions(
-  baseUrl: "http://10.0.2.2:8000/api",
-  connectTimeout: 5000,
-  receiveTimeout: 3000,
-  headers: {
-    'Accept': 'application/json',
-  },
-);
-
-Dio _dio = new Dio(options);
 Dio callApi() {
+  BaseOptions options = new BaseOptions(
+    baseUrl: "http://10.0.2.2:8000/api",
+    connectTimeout: 5000,
+    receiveTimeout: 3000,
+    headers: {
+      'Accept': 'application/json',
+    },
+  );
+
+  Dio _dio = new Dio(options);
+
   _dio.interceptors.add(LogInterceptor(responseBody: true));
   _dio.interceptors.add(
     InterceptorsWrapper(
@@ -19,13 +20,17 @@ Dio callApi() {
         return options; //continue
       },
       onResponse: (Response response) async {
-        // Do something with response data
         return response; // continue
       },
       onError: (DioError e) async {
-        print(e);
-        // Do something with response error
-        return e; //continue
+        // tangkap kode 422 eror / laravel validation
+        if (e.response.statusCode == 422) {
+          for (List errors in e.response.data['errors'].values) {
+            $toast(type: 'error', message: errors.first.toString());
+            break;
+          }
+        }
+        // return e; //continue
       },
     ),
   );

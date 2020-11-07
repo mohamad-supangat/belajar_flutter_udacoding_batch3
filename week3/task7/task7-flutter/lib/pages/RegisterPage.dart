@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:task7/pages/LoginPage.dart';
 import 'package:task7/helpers/toast.dart';

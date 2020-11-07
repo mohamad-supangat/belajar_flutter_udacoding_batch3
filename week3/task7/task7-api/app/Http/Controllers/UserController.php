@@ -8,6 +8,19 @@ use App\Models\User;
 class UserController extends Controller
 {
   /**
+   * Login 
+   *
+   * @return object response
+   */
+  public function login(Request $request)
+  {
+    $request->validate([
+      'username'      => 'required|min:5|max:20',
+      'password'      => 'required|min:5|max:20',
+    ]);
+  }
+  
+  /**
    * fungsi untuk pendaftaran akun user
    *
    * @return object response 
