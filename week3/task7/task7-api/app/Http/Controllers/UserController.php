@@ -30,7 +30,8 @@ class UserController extends Controller
 
     return response()->json([
       'status' => true,
-      'token'  => $token
+      'token'  => $token,
+      'user'   => auth()->user()
     ]);
   }
   

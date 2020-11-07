@@ -51,7 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
           message: response.data['message'],
         );
         if (response.data['status']) {
-          Navigator.pushNamed(context, '/loginPage');
+          Navigator.pushNamed(context, '/login');
         }
       });
     }
@@ -209,7 +209,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           onPressed: () =>
-                              Navigator.pushNamed(context, '/loginPage'),
+                              Navigator.pushNamed(context, '/login'),
                           child: Text(
                             'Masuk',
                             style: TextStyle(color: Colors.red),

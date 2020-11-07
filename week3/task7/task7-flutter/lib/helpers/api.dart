@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'toast.dart';
+import 'auth.dart';
 import 'dart:developer';
 
 Dio callApi() {
   BaseOptions options = new BaseOptions(
-    baseUrl: "http://10.0.2.2:8000/api",
+    baseUrl: "http://192.168.10.101:8000/api",
     connectTimeout: 5000,
     receiveTimeout: 3000,
     headers: {
@@ -18,6 +19,9 @@ Dio callApi() {
   _dio.interceptors.add(
     InterceptorsWrapper(
       onRequest: (RequestOptions options) async {
+        // check jika sudah puya token
+        String token = await Auth().token();
+        options.headers['Authorization'] = 'Bearer $token';
         return options; //continue
       },
       onResponse: (Response response) async {

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:task7/helpers/toast.dart';
-import 'package:task7/pages/RegisterPage.dart';
 import 'package:task7/helpers/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:developer';
+import '../helpers/auth.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/loginPage';
@@ -40,7 +42,17 @@ class _LoginPageState extends State<LoginPage> {
         'username': _usernameController.text,
         'password': _passwordController.text,
       },
-    );
+    ).then((response) async {
+      if (!response.data['status']) {
+        showToast(type: 'error', message: response.data['message']);
+      } else {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        localStorage.setString('token', response.data['token'].toString());
+        localStorage.setString('user', response.data['user'].toString());
+
+        Navigator.pushReplacementNamed(context, '/dashboard');
+      }
+    });
   }
 
   @override
@@ -201,7 +213,7 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               onPressed: () =>
-                                  Navigator.pushNamed(context, '/registerPage'),
+                                  Navigator.pushNamed(context, '/register'),
                               child: Text(
                                 'Daftar',
                                 style: TextStyle(color: Colors.red),
