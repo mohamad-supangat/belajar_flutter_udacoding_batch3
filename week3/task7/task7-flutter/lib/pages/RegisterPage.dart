@@ -33,7 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _prosesRegister() {
     if (!_agree) {
-      $toast(
+      showToast(
         type: 'error',
         message:
             'Kamu belum menyetujui Syarat dan Ketentuan dan Kebijakan Privasi yang berlaku.',
@@ -175,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           if (_formKey.currentState.validate()) {
                             _prosesRegister();
                           } else {
-                            $toast(
+                            showToast(
                               type: 'error',
                               message:
                                   'Pastikan yang anda inputkan sudah benar',

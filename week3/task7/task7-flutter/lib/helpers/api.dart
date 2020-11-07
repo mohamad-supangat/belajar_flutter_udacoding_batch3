@@ -26,11 +26,11 @@ Dio callApi() {
         // tangkap kode 422 eror / laravel validation
         if (e.response.statusCode == 422) {
           for (List errors in e.response.data['errors'].values) {
-            $toast(type: 'error', message: errors.first.toString());
+            showToast(type: 'error', message: errors.first.toString());
             break;
           }
         }
-        // return e; //continue
+        return e; //continue
       },
     ),
   );

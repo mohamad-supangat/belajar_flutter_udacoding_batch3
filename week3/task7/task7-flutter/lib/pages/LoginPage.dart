@@ -181,15 +181,15 @@ class _LoginPageState extends State<LoginPage> {
                           padding: EdgeInsets.all(8),
                           onPressed: () {
                             // cek validasi form
-                            // if (_formKey.currentState.validate()) {
-                            // cek user login proses
-                            _prosesLogin();
-                            // } else {
-                            // $toast(
-                            // type: 'error',
-                            // message: _checkValidationText(),
-                            // );
-                            // }
+                            if (_formKey.currentState.validate()) {
+                              // cek user login proses
+                              _prosesLogin();
+                            } else {
+                              showToast(
+                                type: 'error',
+                                message: _checkValidationText(),
+                              );
+                            }
                           },
                         ),
                         SizedBox(height: 20),
