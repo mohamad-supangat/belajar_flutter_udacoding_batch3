@@ -12,6 +12,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _obsecurePassword = true;
   bool _obsecurePasswordConfirmation = true;
   bool _agree = false;
+  bool _isLoading = false;
 
   // form && text editing controller
   final _formKey = GlobalKey<FormState>();
@@ -31,7 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
       return null;
   }
 
-  void _prosesRegister() {
+  void _prosesRegister() async {
     if (!_agree) {
       showToast(
         type: 'error',
@@ -39,7 +40,8 @@ class _RegisterPageState extends State<RegisterPage> {
             'Kamu belum menyetujui Syarat dan Ketentuan dan Kebijakan Privasi yang berlaku.',
       );
     } else {
-      callApi().post('/user/register', data: {
+      setState(() => _isLoading = true);
+      await callApi().post('/user/register', data: {
         'username': _usernameController.text,
         'name': _nameController.text,
         'email': _emailController.text,
@@ -51,9 +53,10 @@ class _RegisterPageState extends State<RegisterPage> {
           message: response.data['message'],
         );
         if (response.data['status']) {
-          Navigator.pushNamed(context, '/login');
+          Navigator.pushReplacementNamed(context, '/login');
         }
       });
+      setState(() => _isLoading = false);
     }
   }
 
@@ -80,7 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       'Halaman Pendaftaran',
                       style: TextStyle(
                         fontFamily: 'ConcertOne',
-                        color: Colors.red,
+                        color: Colors.blue,
                         fontSize: 35,
                       ),
                     ),
@@ -117,7 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           icon: Icon(
                             Icons.remove_red_eye,
                             color: !this._obsecurePassword
-                                ? Colors.red
+                                ? Colors.blue
                                 : Colors.grey,
                           ),
                           onPressed: () {
@@ -143,7 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           icon: Icon(
                             Icons.remove_red_eye,
                             color: !this._obsecurePasswordConfirmation
-                                ? Colors.red
+                                ? Colors.blue
                                 : Colors.grey,
                           ),
                           onPressed: () {
@@ -189,12 +192,24 @@ class _RegisterPageState extends State<RegisterPage> {
                           }
                         },
                         padding: EdgeInsets.all(15),
-                        color: Colors.red,
+                        color: Colors.blue,
                         textColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Text('DAFTAR SEKARANG'),
+                        child: (() {
+                          if (!_isLoading) {
+                            return Text('DAFTAR SEKARANG');
+                          } else {
+                            return SizedBox(
+                              height: 25,
+                              width: 25,
+                              child: CircularProgressIndicator(
+                                backgroundColor: Colors.white,
+                              ),
+                            );
+                          }
+                        }()),
                       ),
                     ),
                     SizedBox(
@@ -209,10 +224,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           onPressed: () =>
-                              Navigator.pushNamed(context, '/login'),
+                              Navigator.pushReplacementNamed(context, '/login'),
                           child: Text(
                             'Masuk',
-                            style: TextStyle(color: Colors.red),
+                            style: TextStyle(color: Colors.blue),
                           ),
                         ),
                       ],

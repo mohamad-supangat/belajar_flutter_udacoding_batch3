@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:task7/helpers/toast.dart';
-import 'package:task7/helpers/api.dart';
+import '../helpers/toast.dart';
+import '../helpers/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:developer';
-import '../helpers/auth.dart';
+import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/loginPage';
@@ -14,6 +13,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _obsecurePassword = true;
+  bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _usernameController = TextEditingController();
@@ -35,8 +35,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   // proses pengecekan login
-  void _prosesLogin() {
-    callApi().post(
+  void _prosesLogin() async {
+    setState(() => _isLoading = true);
+
+    await callApi().post(
       '/user/login',
       data: {
         'username': _usernameController.text,
@@ -46,13 +48,22 @@ class _LoginPageState extends State<LoginPage> {
       if (!response.data['status']) {
         showToast(type: 'error', message: response.data['message']);
       } else {
+        // masukan token dan tmp user di dalam shared_preferences
         SharedPreferences localStorage = await SharedPreferences.getInstance();
-        localStorage.setString('token', response.data['token'].toString());
-        localStorage.setString('user', response.data['user'].toString());
+        localStorage.setString(
+          'token',
+          response.data['token'].toString(),
+        );
 
+        localStorage.setString(
+          'user',
+          jsonEncode(response.data['user']).toString(),
+        );
+        // pindahkan page ke dashboard
         Navigator.pushReplacementNamed(context, '/dashboard');
       }
     });
+    setState(() => _isLoading = false);
   }
 
   @override
@@ -72,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
               'Halaman Login',
               style: TextStyle(
                 fontFamily: 'ConcertOne',
-                color: Colors.red,
+                color: Colors.blue,
                 fontSize: 35,
               ),
             ),
@@ -126,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                               icon: Icon(
                                 Icons.remove_red_eye,
                                 color: !this._obsecurePassword
-                                    ? Colors.red
+                                    ? Colors.blue
                                     : Colors.grey,
                               ),
                               onPressed: () {
@@ -157,38 +168,13 @@ class _LoginPageState extends State<LoginPage> {
                           height: 20,
                         ),
                         RawMaterialButton(
-                          fillColor: Colors.red,
+                          fillColor: Colors.blue,
                           elevation: 0,
                           textStyle: TextStyle(color: Colors.white),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(2),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  Icons.chevron_right,
-                                  color: Colors.red,
-                                ),
-                              ),
-                              Text(
-                                'MASUK SEKARANG',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                            ],
-                          ),
+                          child: _loginButton(),
                           padding: EdgeInsets.all(8),
                           onPressed: () {
                             // cek validasi form
@@ -212,11 +198,11 @@ class _LoginPageState extends State<LoginPage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              onPressed: () =>
-                                  Navigator.pushNamed(context, '/register'),
+                              onPressed: () => Navigator.pushReplacementNamed(
+                                  context, '/register'),
                               child: Text(
                                 'Daftar',
-                                style: TextStyle(color: Colors.red),
+                                style: TextStyle(color: Colors.blue),
                               ),
                             ),
                           ],
@@ -246,5 +232,46 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  _loginButton() {
+    if (_isLoading) {
+      return Center(
+        child: SizedBox(
+          height: 25,
+          width: 25,
+          child: CircularProgressIndicator(
+            backgroundColor: Colors.white,
+          ),
+        ),
+      );
+    } else {
+      return Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            padding: EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.chevron_right,
+              color: Colors.blue,
+            ),
+          ),
+          Text(
+            'MASUK SEKARANG',
+            style: TextStyle(
+              fontSize: 15,
+            ),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+        ],
+      );
+    }
   }
 }

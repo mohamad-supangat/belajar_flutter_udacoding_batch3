@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'NewsPage.dart';
+import 'MyProfilePage.dart';
+
 import '../models/User.dart';
 import '../helpers/auth.dart';
 import '../config.dart';
@@ -13,6 +16,7 @@ class _DashboardPageState extends State<DashboardPage> {
   int _index = 0;
   List<Widget> _childerns = [
     NewsPage(),
+    MyProfilePage(),
   ];
   User _user;
 
@@ -29,23 +33,62 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Doktor Merah'),
-        actions: [],
-      ),
-      body: Column(
-        children: [
-          RaisedButton(
-            onPressed: () {
-              Auth().logout().then((status) {
-                Navigator.pushReplacementNamed(context, '/login');
-              });
-            },
-            child: Text('asdasd'),
-          )
-        ],
-      ),
-    );
+    if (_user == null) {
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Doktor Biru'),
+          leading: null,
+          actions: [
+            PopupMenuButton(
+              icon: CircleAvatar(
+                backgroundImage: _user.photo == null
+                    ? AssetImage('assets/images/default-user.png')
+                    : NetworkImage(config()['baseUrl'] + _user.photo),
+              ),
+              onSelected: (String selected) {
+                if (selected == 'logout') {
+                  Auth().logout().then((status) {
+                    Navigator.pushReplacementNamed(context, '/login');
+                  });
+                }
+              },
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem(
+                    value: 'logout',
+                    child: Text('Logout'),
+                  )
+                ];
+              },
+            )
+          ],
+        ),
+        body: _childerns[_index],
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (index) {
+            setState(() {
+              _index = index;
+            });
+          },
+          currentIndex: _index,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.book),
+              label: 'Berita',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle_sharp),
+              label: 'Profile',
+            )
+          ],
+        ),
+      );
+    }
   }
 }

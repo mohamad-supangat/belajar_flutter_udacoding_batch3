@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'toast.dart';
 import 'auth.dart';
 import '../config.dart';
-// import 'dart:developer';
+import 'dart:developer';
 
 Dio callApi() {
   BaseOptions options = new BaseOptions(
@@ -22,7 +22,7 @@ Dio callApi() {
         // masukan token ke header
         String token = await Auth().token();
         options.headers['authorization'] = 'Bearer $token';
-        // log(options.headers.toString());
+        log(options.headers.toString());
         return options; //continue
       },
       onResponse: (Response response) async {

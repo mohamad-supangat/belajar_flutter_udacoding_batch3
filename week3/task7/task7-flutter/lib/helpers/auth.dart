@@ -9,13 +9,15 @@ class Auth {
     return User.fromJson(jsonDecode(localStorage.getString('user')));
   }
 
+  getUser() async {}
+
   Future<String> token() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     return localStorage.getString('token');
   }
 
   Future<bool> logout() async {
-    callApi().get('/user/logout');
+    await callApi().get('/user/logout');
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     localStorage.remove('user');
     localStorage.remove('token');
