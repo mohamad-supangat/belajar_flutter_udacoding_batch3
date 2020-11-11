@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../helpers/api.dart';
+import '../components/BottomNavigationBars.dart';
+import '../components/NoItems.dart';
+import '../pages/ReadNewsPage.dart';
 import 'dart:developer';
 
 class NewsPage extends StatefulWidget {
@@ -27,75 +30,114 @@ class _NewsPageState extends State<NewsPage> {
   }
 
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: _news.length + 1,
-        itemBuilder: (BuildContext context, int index) {
-          if (index == _news.length) {
-            return _buildProgressIndicator();
-          } else {
-            return Padding(
-              padding: const EdgeInsets.all(5),
-              child: Container(
-                child: Card(
-                  clipBehavior: Clip.antiAlias,
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 150,
-                        child: FittedBox(
-                          fit: BoxFit.cover,
-                          child: Image.network(_news[index]['image']),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Doktor'),
+            Text(
+              ' New',
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: Container(
+        child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: _news.length + 1,
+          itemBuilder: (BuildContext context, int index) {
+            if (index == _news.length) {
+              if (!_isLoading && _news.length == 0) {
+                return NoItems(
+                  message: 'Tidak ada berita yang dapat ditampikan',
+                );
+              } else {
+                return _buildProgressIndicator();
+              }
+            } else {
+              return Padding(
+                padding: const EdgeInsets.all(5),
+                child: Container(
+                  child: Card(
+                    clipBehavior: Clip.antiAlias,
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ReadNewsPage(_news[index]),
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            color: Colors.grey[300],
+                            width: double.infinity,
+                            height: 150,
+                            child: FittedBox(
+                              fit: BoxFit.cover,
+                              child: Image.network(_news[index]['image']),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
                               children: [
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Icon(Icons.date_range, size: 15),
-                                    Text(_news[index]['create_date'] == null
-                                        ? ''
-                                        : _news[index]['create_date']),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.date_range, size: 15),
+                                        Text(_news[index]['create_date'] == null
+                                            ? ''
+                                            : _news[index]['create_date']),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.account_circle_sharp,
+                                            size: 15),
+                                        Text(_news[index]['user']),
+                                      ],
+                                    ),
                                   ],
                                 ),
-                                Row(
-                                  children: [
-                                    Icon(Icons.account_circle_sharp, size: 15),
-                                    Text(_news[index]['user']),
-                                  ],
+                                Divider(),
+                                Text(
+                                  _news[index]['title'],
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ],
                             ),
-                            Divider(),
-                            Text(
-                              _news[index]['title'],
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          }
-        },
-        controller: _scrollController,
+              );
+            }
+          },
+          controller: _scrollController,
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: mainBottomNavigationBars(),
       ),
     );
   }
@@ -115,18 +157,28 @@ class _NewsPageState extends State<NewsPage> {
   void _getMoreData() {
     if (!_isLoading) {
       setState(() => _isLoading = true);
-      callApi().get('/news').then((response) {
-        List tempList = new List();
-        for (int i = 0; i < response.data['data'].length; i++) {
-          tempList.add(response.data['data'][i]);
-        }
+      try {
+        callApi().get('/news').then((response) {
+          List tempList = new List();
+          for (int i = 0; i < response.data['data'].length; i++) {
+            tempList.add(response.data['data'][i]);
+          }
 
+          setState(() {
+            _hasNext = response.data['next_page_url'] != null ? true : false;
+            _news.addAll(tempList);
+            _isLoading = false;
+          });
+        }).catchError(() {
+          setState(() {
+            _isLoading = false;
+          });
+        });
+      } catch (e) {
         setState(() {
           _isLoading = false;
-          _hasNext = response.data['next_page_url'] != null ? true : false;
-          _news.addAll(tempList);
         });
-      });
+      }
     }
   }
 }
