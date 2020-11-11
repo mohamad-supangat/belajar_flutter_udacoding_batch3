@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/user')->group(function () {
   Route::post('login', '\App\Http\Controllers\UserController@login');
   Route::post('register', '\App\Http\Controllers\UserController@register');
-  
+
   Route::middleware('auth:api')->get('auth', function (Request $request) {
     return $request->user();
   });
@@ -26,3 +26,4 @@ Route::prefix('/user')->group(function () {
 });
 
 Route::get('/news', '\App\Http\Controllers\NewsController@get');
+Route::get('/kamus', '\App\Http\Controllers\KamusController@get');

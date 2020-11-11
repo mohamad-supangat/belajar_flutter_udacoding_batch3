@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:task7/pages/LoginPage.dart';
-import 'package:task7/pages/RegisterPage.dart';
-import 'package:task7/pages/NewsPage.dart';
+import './pages/LoginPage.dart';
+import './pages/RegisterPage.dart';
+import './pages/NewsPage.dart';
+import './pages/KamusPage.dart';
 
 void main() async {
   runApp(MyApp());
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/news': (context) => NewsPage(),
         '/login': (context) => LoginPage(),
         '/register': (context) => RegisterPage(),
+        '/kamus': (context) => KamusPage(),
       },
     );
   }

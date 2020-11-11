@@ -3,7 +3,6 @@ import '../helpers/api.dart';
 import '../components/BottomNavigationBars.dart';
 import '../components/NoItems.dart';
 import '../pages/ReadNewsPage.dart';
-import 'dart:developer';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -14,7 +13,7 @@ class _NewsPageState extends State<NewsPage> {
   @override
   List _news = [];
   bool _isLoading = false;
-  bool _hasNext = false;
+  bool _hasNext = true;
   ScrollController _scrollController = ScrollController();
 
   @override
@@ -32,112 +31,111 @@ class _NewsPageState extends State<NewsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Doktor'),
-            Text(
-              ' New',
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-          ],
-        ),
+        centerTitle: true,
+        title: Text('Berita Kesehatan'),
       ),
-      body: Container(
-        child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: _news.length + 1,
-          itemBuilder: (BuildContext context, int index) {
-            if (index == _news.length) {
-              if (!_isLoading && _news.length == 0) {
-                return NoItems(
-                  message: 'Tidak ada berita yang dapat ditampikan',
-                );
-              } else {
-                return _buildProgressIndicator();
-              }
+      body: _generateList(),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (index) {
+          if (index == 1) {
+            Navigator.pushReplacementNamed(context, '/kamus');
+          }
+        },
+        currentIndex: 0,
+        items: mainBottomNavigationBars(),
+      ),
+    );
+  }
+
+  Widget _generateList() {
+    return Container(
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: _news.length + 1,
+        itemBuilder: (BuildContext context, int index) {
+          if (index == _news.length) {
+            if (!_isLoading && _news.length == 0) {
+              return NoItems(
+                message: 'Tidak ada berita yang dapat ditampikan',
+              );
             } else {
-              return Padding(
-                padding: const EdgeInsets.all(5),
-                child: Container(
-                  child: Card(
-                    clipBehavior: Clip.antiAlias,
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ReadNewsPage(_news[index]),
+              return _buildProgressIndicator();
+            }
+          } else {
+            return Padding(
+              padding: const EdgeInsets.all(5),
+              child: Container(
+                child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ReadNewsPage(_news[index]),
+                        ),
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Container(
+                          color: Colors.grey[300],
+                          width: double.infinity,
+                          height: 150,
+                          child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: Image.network(_news[index]['image']),
                           ),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Container(
-                            color: Colors.grey[300],
-                            width: double.infinity,
-                            height: 150,
-                            child: FittedBox(
-                              fit: BoxFit.cover,
-                              child: Image.network(_news[index]['image']),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(20),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Icon(Icons.date_range, size: 15),
-                                        Text(_news[index]['create_date'] == null
-                                            ? ''
-                                            : _news[index]['create_date']),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.account_circle_sharp,
-                                            size: 15),
-                                        Text(_news[index]['user']),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Divider(),
-                                Text(
-                                  _news[index]['title'],
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(Icons.date_range, size: 15),
+                                      Text(_news[index]['create_date'] == null
+                                          ? ''
+                                          : _news[index]['create_date']),
+                                    ],
                                   ),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.account_circle_sharp,
+                                          size: 15),
+                                      Text(_news[index]['user']),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Divider(),
+                              Text(
+                                _news[index]['title'],
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              );
-            }
-          },
-          controller: _scrollController,
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        items: mainBottomNavigationBars(),
+              ),
+            );
+          }
+        },
+        controller: _scrollController,
       ),
     );
   }
@@ -155,7 +153,7 @@ class _NewsPageState extends State<NewsPage> {
   }
 
   void _getMoreData() {
-    if (!_isLoading) {
+    if (!_isLoading && _hasNext) {
       setState(() => _isLoading = true);
       try {
         callApi().get('/news').then((response) {
@@ -170,14 +168,10 @@ class _NewsPageState extends State<NewsPage> {
             _isLoading = false;
           });
         }).catchError(() {
-          setState(() {
-            _isLoading = false;
-          });
+          setState(() => _isLoading = false);
         });
       } catch (e) {
-        setState(() {
-          _isLoading = false;
-        });
+        setState(() => _isLoading = false);
       }
     }
   }

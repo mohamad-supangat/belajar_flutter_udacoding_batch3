@@ -14,6 +14,10 @@ class _ReadNewsPageState extends State<ReadNewsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.share_rounded),
+      ),
       body: Stack(
         children: [
           CustomScrollView(
