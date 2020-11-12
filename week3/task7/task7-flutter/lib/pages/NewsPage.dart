@@ -14,6 +14,7 @@ class _NewsPageState extends State<NewsPage> {
   List _news = [];
   bool _isLoading = false;
   bool _hasNext = true;
+  int _page = 1;
   ScrollController _scrollController = ScrollController();
 
   @override
@@ -28,7 +29,7 @@ class _NewsPageState extends State<NewsPage> {
     });
   }
 
-  Widget build(BuildContext context) {
+  build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -54,12 +55,15 @@ class _NewsPageState extends State<NewsPage> {
         itemCount: _news.length + 1,
         itemBuilder: (BuildContext context, int index) {
           if (index == _news.length) {
-            if (!_isLoading && _news.length == 0) {
-              return NoItems(
-                message: 'Tidak ada berita yang dapat ditampikan',
-              );
-            } else {
+            if (_isLoading) {
               return _buildProgressIndicator();
+            } else {
+              return Visibility(
+                visible: _news.length == 0,
+                child: NoItems(
+                  message: 'Tidak ada berita yang dapat ditampikan',
+                ),
+              );
             }
           } else {
             return Padding(
@@ -141,22 +145,19 @@ class _NewsPageState extends State<NewsPage> {
   }
 
   Widget _buildProgressIndicator() {
-    return new Padding(
+    return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: new Center(
-        child: new Opacity(
-          opacity: _isLoading ? 1.0 : 00,
-          child: new CircularProgressIndicator(),
-        ),
+      child: Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }
 
   void _getMoreData() {
     if (!_isLoading && _hasNext) {
-      setState(() => _isLoading = true);
+      setState(() => _isLoading);
       try {
-        callApi().get('/news').then((response) {
+        callApi().get('/news?page=${_page++}').then((response) {
           List tempList = new List();
           for (int i = 0; i < response.data['data'].length; i++) {
             tempList.add(response.data['data'][i]);

@@ -14,7 +14,11 @@ class KamusController extends Controller
    */
   public function get(Request $request)
   {
-    $news  = Kamus::orderBy('id', 'DESC')->paginate(10);
-    return $news;
+    $kamus  = Kamus::orderBy('id', 'DESC');
+    if ($search =  $request->search) {
+      $kamus->where('title', 'like', "%{$search}%")
+        ->orWhere('description', 'like', "%{$search}%");
+    }
+    return $kamus->paginate(10);
   }
 }

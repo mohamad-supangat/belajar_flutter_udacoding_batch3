@@ -3,6 +3,7 @@ import 'package:expandable/expandable.dart';
 import '../helpers/api.dart';
 import '../components/BottomNavigationBars.dart';
 import '../components/NoItems.dart';
+import 'dart:async';
 
 class KamusPage extends StatefulWidget {
   @override
@@ -13,7 +14,17 @@ class _KamusPageState extends State<KamusPage> {
   List _kamus = [];
   bool _isLoading = false;
   bool _hasNext = true;
-  ScrollController _scrollController = ScrollController();
+  String searchQuery;
+  int page = 1;
+
+  final ScrollController _scrollController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
+  Timer _debounce;
+
+  // app bar
+  Icon _searchIcon = new Icon(Icons.search);
+  Widget _appBarTitle = new Text('Kamus Kesehatan');
+
   @override
   void initState() {
     this._getMoreData();
@@ -24,6 +35,15 @@ class _KamusPageState extends State<KamusPage> {
         _getMoreData();
       }
     });
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    _debounce?.cancel();
+    super.dispose();
   }
 
   @override
@@ -31,11 +51,15 @@ class _KamusPageState extends State<KamusPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Kamus Kesehatan'),
+        title: _appBarTitle,
         actions: [
           FlatButton(
             onPressed: () {},
-            child: Icon(Icons.search),
+            child: IconButton(
+              onPressed: () => _searchPressed(),
+              color: Colors.white,
+              icon: _searchIcon,
+            ),
           )
         ],
       ),
@@ -79,13 +103,22 @@ class _KamusPageState extends State<KamusPage> {
                   child: Container(
                     padding: EdgeInsets.all(10),
                     child: ExpandablePanel(
-                      header: Text(
-                        _kamus[index]['title'],
-                        style: TextStyle(
-                          height: 1.5,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      header: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(Icons.book_outlined),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              _kamus[index]['title'],
+                              style: TextStyle(
+                                height: 1.5,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       expanded: Column(
                         children: [
@@ -96,10 +129,9 @@ class _KamusPageState extends State<KamusPage> {
                               fontSize: 11,
                               height: 1.5,
                             ),
-                          )
+                          ),
                         ],
                       ),
-                      tapHeaderToExpand: true,
                       hasIcon: false,
                     ),
                   ),
@@ -129,7 +161,9 @@ class _KamusPageState extends State<KamusPage> {
     if (!_isLoading && _hasNext) {
       setState(() => _isLoading = true);
       try {
-        callApi().get('/kamus').then((response) {
+        callApi()
+            .get('/kamus?page=${page++}&search=${searchQuery}')
+            .then((response) {
           List tempList = new List();
           for (int i = 0; i < response.data['data'].length; i++) {
             tempList.add(response.data['data'][i]);
@@ -147,5 +181,43 @@ class _KamusPageState extends State<KamusPage> {
         setState(() => _isLoading = false);
       }
     }
+  }
+
+  // fungsi ketika text field pencarian diedit maka akan melakukan pencarian
+  void _onSearchChanged() {
+    if (_debounce?.isActive ?? false) _debounce.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      searchQuery = _searchController.text;
+      page = 1;
+      _kamus = [];
+      _getMoreData();
+    });
+  }
+
+  // trigger fungsi ketika icon pencarian di appbar di tekan
+  void _searchPressed() {
+    setState(() {
+      if (this._searchIcon.icon == Icons.search) {
+        this._searchIcon = Icon(Icons.close);
+        this._appBarTitle = TextField(
+          controller: _searchController,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+          decoration: InputDecoration(
+            prefixIcon: Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+            focusColor: Colors.white,
+            hintText: 'Pencarian...',
+            hintStyle: TextStyle(color: Colors.white),
+          ),
+        );
+      } else {
+        this._searchIcon = Icon(Icons.search);
+        this._appBarTitle = Text('Kamus Kesehatan');
+      }
+    });
   }
 }
