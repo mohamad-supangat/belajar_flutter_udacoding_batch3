@@ -3,6 +3,7 @@ import '../helpers/api.dart';
 import '../components/BottomNavigationBars.dart';
 import '../components/NoItems.dart';
 import '../pages/ReadNewsPage.dart';
+import '../helpers/auth.dart';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -37,9 +38,13 @@ class _NewsPageState extends State<NewsPage> {
       ),
       body: _generateList(),
       bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) {
+        onTap: (index) async {
           if (index == 1) {
             Navigator.pushReplacementNamed(context, '/kamus');
+          } else if (index == 2) {
+            String token = await Auth().token();
+            Navigator.pushNamed(
+                context, token != null ? '/myProfile' : '/login');
           }
         },
         currentIndex: 0,

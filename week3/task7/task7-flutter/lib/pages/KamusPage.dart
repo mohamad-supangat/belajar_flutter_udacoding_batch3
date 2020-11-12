@@ -6,6 +6,7 @@ import 'dart:async';
 import '../helpers/api.dart';
 import '../components/BottomNavigationBars.dart';
 import '../components/NoItems.dart';
+import '../helpers/auth.dart';
 
 class KamusPage extends StatefulWidget {
   @override
@@ -38,14 +39,6 @@ class _KamusPageState extends State<KamusPage> {
     _searchController.addListener(_onSearchChanged);
   }
 
-  // @override
-  // void dispose() {
-  //   _searchController.removeListener(_onSearchChanged);
-  //   _searchController.dispose();
-  //   _debounce?.cancel();
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,9 +60,13 @@ class _KamusPageState extends State<KamusPage> {
       bottomNavigationBar: BottomNavigationBar(
         items: mainBottomNavigationBars(),
         currentIndex: 1,
-        onTap: (index) {
+        onTap: (index) async {
           if (index == 0) {
             Navigator.pushReplacementNamed(context, '/news');
+          } else if (index == 2) {
+            String token = await Auth().token();
+            Navigator.pushNamed(
+                context, token != null ? '/myProfile' : '/login');
           }
         },
       ),

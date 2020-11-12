@@ -198,8 +198,8 @@ class _LoginPageState extends State<LoginPage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              onPressed: () => Navigator.pushReplacementNamed(
-                                  context, '/register'),
+                              onPressed: () =>
+                                  Navigator.pushNamed(context, '/register'),
                               child: Text(
                                 'Daftar',
                                 style: TextStyle(color: Colors.blue),

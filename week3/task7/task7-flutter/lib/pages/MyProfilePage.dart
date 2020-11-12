@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/User.dart';
 import '../helpers/auth.dart';
+import '../config.dart';
 
 class MyProfilePage extends StatefulWidget {
   @override
@@ -10,83 +11,92 @@ class MyProfilePage extends StatefulWidget {
 class _MyProfilePageState extends State<MyProfilePage> {
   bool _obsecurePassword = true;
   User _user;
+  Map<String, TextEditingController> _textController = {};
+
+  @override
+  void initState() {
+    _getUserState();
+    super.initState();
+  }
+
+  // dapatkan user dari class auth helper
+  void _getUserState() async {
+    User user = await Auth().user();
+    setState(() => {_user = user});
+  }
+
   @override
   Widget build(BuildContext context) {
-    // final TextEditingController _nameController =
-    // TextEditingController(text: profile.name);
-    // final TextEditingController _usernameController =
-    // TextEditingController(text: profile.username);
-    // final TextEditingController _emailController =
-    // TextEditingController(text: profile.email);
-    // final TextEditingController _passwordController =
-    // TextEditingController(text: profile.password);
-
-    return Column(
-      children: [
-        // ProfilePicture(
-        // url: profile.profileImage,
-        // ),
-        // Container(
-        // padding: EdgeInsets.symmetric(
-        // vertical: 10,
-        // horizontal: 30,
-        // ),
-        // child: Column(
-        // children: [
-        // Card(
-        // shape: RoundedRectangleBorder(
-        // borderRadius: BorderRadius.circular(20),
-        // ),
-        // child: Padding(
-        // padding: EdgeInsets.all(20),
-        // child: Column(
-        // children: [
-        // TextFormField(
-        // controller: _nameController,
-        // decoration: InputDecoration(
-        // labelText: "Nama Lengkap",
-        // ),
-        // ),
-        // TextFormField(
-        // controller: _usernameController,
-        // decoration: InputDecoration(
-        // labelText: "Username",
-        // ),
-        // ),
-        // TextFormField(
-        // keyboardType: TextInputType.emailAddress,
-        // controller: _emailController,
-        // decoration: InputDecoration(
-        // labelText: "Email",
-        // ),
-        // ),
-        // TextFormField(
-        // controller: _passwordController,
-        // obscureText: this._obsecurePassword,
-        // decoration: InputDecoration(
-        // suffixIcon: IconButton(
-        // icon: Icon(
-        // Icons.remove_red_eye,
-        // color: !this._obsecurePassword
-        // ? Colors.red
-        // : Colors.grey,
-        // ),
-        // onPressed: () {
-        // setState(() => this._obsecurePassword =
-        // !this._obsecurePassword);
-        // },
-        // ),
-        // labelText: 'Password',
-        // ),
-        // ),
-        // ],
-        // ),
-        // ),
-        // ),
-        // ],
-        // ),
-        // )
-      ],
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ProfilePicture(
+              url: 'asdasdasd',
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 30,
+              ),
+              child: Column(
+                children: [
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            controller: _textController['name'],
+                            decoration: InputDecoration(
+                              labelText: "Nama Lengkap",
+                            ),
+                          ),
+                          TextFormField(
+                            controller: _textController['username'],
+                            decoration: InputDecoration(
+                              labelText: "Username",
+                            ),
+                          ),
+                          TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            controller: _textController['email'],
+                            decoration: InputDecoration(
+                              labelText: "Email",
+                            ),
+                          ),
+                          TextFormField(
+                            controller: _textController['password'],
+                            obscureText: this._obsecurePassword,
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  Icons.remove_red_eye,
+                                  color: !this._obsecurePassword
+                                      ? Colors.red
+                                      : Colors.grey,
+                                ),
+                                onPressed: () {
+                                  setState(() => this._obsecurePassword =
+                                      !this._obsecurePassword);
+                                },
+                              ),
+                              labelText: 'Password',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -95,12 +105,11 @@ class ProfilePicture extends StatefulWidget {
   final url;
   ProfilePicture({this.url});
   @override
-  _ProfilePictureState createState() => _ProfilePictureState(url);
+  _ProfilePictureState createState() => _ProfilePictureState();
 }
 
+// rouded foto profile
 class _ProfilePictureState extends State<ProfilePicture> {
-  final url;
-  _ProfilePictureState(this.url);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -120,7 +129,9 @@ class _ProfilePictureState extends State<ProfilePicture> {
                     shape: BoxShape.circle,
                     image: DecorationImage(
                       fit: BoxFit.fill,
-                      image: NetworkImage(url),
+                      image: widget.url == null
+                          ? AssetImage('assets/images/default-user.png')
+                          : NetworkImage(config()['baseUrl'] + widget.url),
                     ),
                   ),
                 ),
