@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
+import 'package:easy_debounce/easy_debounce.dart';
+import 'dart:async';
+
 import '../helpers/api.dart';
 import '../components/BottomNavigationBars.dart';
 import '../components/NoItems.dart';
-import 'dart:async';
 
 class KamusPage extends StatefulWidget {
   @override
@@ -19,8 +21,6 @@ class _KamusPageState extends State<KamusPage> {
 
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
-  Timer _debounce;
-
   // app bar
   Icon _searchIcon = new Icon(Icons.search);
   Widget _appBarTitle = new Text('Kamus Kesehatan');
@@ -38,13 +38,13 @@ class _KamusPageState extends State<KamusPage> {
     _searchController.addListener(_onSearchChanged);
   }
 
-  @override
-  void dispose() {
-    _searchController.removeListener(_onSearchChanged);
-    _searchController.dispose();
-    _debounce?.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _searchController.removeListener(_onSearchChanged);
+  //   _searchController.dispose();
+  //   _debounce?.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +162,8 @@ class _KamusPageState extends State<KamusPage> {
       setState(() => _isLoading = true);
       try {
         callApi()
-            .get('/kamus?page=${page++}&search=${searchQuery}')
+            .get(
+                '/kamus?page=${page++}&search=${searchQuery == null ? '' : searchQuery}')
             .then((response) {
           List tempList = new List();
           for (int i = 0; i < response.data['data'].length; i++) {
@@ -183,15 +184,21 @@ class _KamusPageState extends State<KamusPage> {
     }
   }
 
+  // proses untuk melakukan pencarian
+  void _searchProses() {
+    searchQuery = _searchController.text;
+    page = 1;
+    _kamus = [];
+    _getMoreData();
+  }
+
   // fungsi ketika text field pencarian diedit maka akan melakukan pencarian
   void _onSearchChanged() {
-    if (_debounce?.isActive ?? false) _debounce.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      searchQuery = _searchController.text;
-      page = 1;
-      _kamus = [];
-      _getMoreData();
-    });
+    EasyDebounce.debounce(
+      'search_kamus',
+      Duration(milliseconds: 500),
+      () => _searchProses(),
+    );
   }
 
   // trigger fungsi ketika icon pencarian di appbar di tekan
