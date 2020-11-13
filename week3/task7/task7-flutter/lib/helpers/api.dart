@@ -38,6 +38,7 @@ Dio callApi() {
             break;
           }
         } else if (e.response.statusCode == 401) {
+          await Auth().removeToken();
           navigatorKey.currentState.pushNamedAndRemoveUntil(
             '/login',
             (Route<dynamic> route) => false,
