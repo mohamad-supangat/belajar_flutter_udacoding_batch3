@@ -158,11 +158,12 @@ class _NewsPageState extends State<NewsPage> {
     );
   }
 
-  void _getMoreData() {
+  void _getMoreData() async {
     if (!_isLoading && _hasNext) {
       setState(() => _isLoading = true);
+      print('loading saat ini adalah $_isLoading');
       try {
-        callApi().get('/news?page=${_page++}').then((response) {
+        await callApi().get('/news?page=${_page++}').then((response) {
           List tempList = new List();
           for (int i = 0; i < response.data['data'].length; i++) {
             tempList.add(response.data['data'][i]);
@@ -174,7 +175,7 @@ class _NewsPageState extends State<NewsPage> {
           });
         });
       } finally {
-        setState(() => _isLoading = false);
+        setState(() => {_isLoading = false});
       }
     }
   }

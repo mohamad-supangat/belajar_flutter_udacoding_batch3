@@ -154,11 +154,11 @@ class _KamusPageState extends State<KamusPage> {
     );
   }
 
-  void _getMoreData() {
+  void _getMoreData() async {
     if (!_isLoading && _hasNext) {
       setState(() => _isLoading = true);
       try {
-        callApi()
+        await callApi()
             .get(
                 '/kamus?page=${page++}&search=${searchQuery == null ? '' : searchQuery}')
             .then((response) {

@@ -91,7 +91,7 @@ flutter:
 
 
 flutter_icons:
-  image_path: 'assets/images/logo.png'
+  image_path: 'assets/images/default-user.png'
   android: true
   ios: true
 
