@@ -5,6 +5,7 @@ import './pages/RegisterPage.dart';
 import './pages/NewsPage.dart';
 import './pages/KamusPage.dart';
 import './pages/MyProfilePage.dart';
+import 'bus.dart';
 
 void main() async {
   runApp(MyApp());
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Doktor News',
+      navigatorKey: navigatorKey,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

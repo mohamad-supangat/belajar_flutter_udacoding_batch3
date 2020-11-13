@@ -170,12 +170,9 @@ class _KamusPageState extends State<KamusPage> {
           setState(() {
             _hasNext = response.data['next_page_url'] != null ? true : false;
             _kamus.addAll(tempList);
-            _isLoading = false;
           });
-        }).catchError(() {
-          setState(() => _isLoading = false);
         });
-      } catch (e) {
+      } finally {
         setState(() => _isLoading = false);
       }
     }

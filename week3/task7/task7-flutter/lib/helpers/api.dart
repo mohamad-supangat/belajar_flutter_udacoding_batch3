@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'toast.dart';
 import 'auth.dart';
 import '../config.dart';
 import 'dart:developer';
+import '../bus.dart';
 
 Dio callApi() {
   BaseOptions options = new BaseOptions(
@@ -35,6 +37,11 @@ Dio callApi() {
             showToast(type: 'error', message: errors.first.toString());
             break;
           }
+        } else if (e.response.statusCode == 401) {
+          navigatorKey.currentState.pushNamedAndRemoveUntil(
+            '/login',
+            (Route<dynamic> route) => false,
+          );
         } else {
           showToast(type: 'error', message: 'Terjadi kesalahan pada jaringan');
         }

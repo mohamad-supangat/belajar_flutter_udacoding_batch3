@@ -76,6 +76,19 @@ class _LoginPageState extends State<LoginPage> {
               child: Stack(
                 children: [
                   Image.asset('assets/images/image843.png'),
+                  SafeArea(
+                    child: Row(
+                      children: [
+                        FlatButton.icon(
+                          onPressed: () {
+                            Navigator.of(context).pushReplacementNamed('/news');
+                          },
+                          icon: Icon(Icons.arrow_back),
+                          label: Text('Berita'),
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

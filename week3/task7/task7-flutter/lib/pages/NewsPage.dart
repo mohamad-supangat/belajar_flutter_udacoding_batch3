@@ -160,7 +160,7 @@ class _NewsPageState extends State<NewsPage> {
 
   void _getMoreData() {
     if (!_isLoading && _hasNext) {
-      setState(() => _isLoading);
+      setState(() => _isLoading = true);
       try {
         callApi().get('/news?page=${_page++}').then((response) {
           List tempList = new List();
@@ -171,12 +171,9 @@ class _NewsPageState extends State<NewsPage> {
           setState(() {
             _hasNext = response.data['next_page_url'] != null ? true : false;
             _news.addAll(tempList);
-            _isLoading = false;
           });
-        }).catchError(() {
-          setState(() => _isLoading = false);
         });
-      } catch (e) {
+      } finally {
         setState(() => _isLoading = false);
       }
     }
