@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
-import 'package:easy_debounce/easy_debounce.dart';
+import 'package:just_debounce_it/just_debounce_it.dart';
 import 'dart:async';
 
 import '../helpers/api.dart';
@@ -29,7 +29,6 @@ class _KamusPageState extends State<KamusPage> {
   @override
   void initState() {
     this._getMoreData();
-    super.initState();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
@@ -37,6 +36,7 @@ class _KamusPageState extends State<KamusPage> {
       }
     });
     _searchController.addListener(_onSearchChanged);
+    super.initState();
   }
 
   @override
@@ -183,16 +183,14 @@ class _KamusPageState extends State<KamusPage> {
     searchQuery = _searchController.text;
     page = 1;
     _kamus = [];
+    _hasNext = true;
     _getMoreData();
   }
 
-  // fungsi ketika text field pencarian diedit maka akan melakukan pencarian
+  // fungsi ketika text field pencarian diedit
+  // maka akan melakukan debounce pencarian untuk menanggulangi request secara terus menerus
   void _onSearchChanged() {
-    EasyDebounce.debounce(
-      'search_kamus',
-      Duration(milliseconds: 500),
-      () => _searchProses(),
-    );
+    Debounce.milliseconds(500, _searchProses);
   }
 
   // trigger fungsi ketika icon pencarian di appbar di tekan

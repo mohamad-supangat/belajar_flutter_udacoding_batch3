@@ -21,13 +21,13 @@ class _NewsPageState extends State<NewsPage> {
   @override
   void initState() {
     this._getMoreData();
-    super.initState();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         _getMoreData();
       }
     });
+    super.initState();
   }
 
   build(BuildContext context) {

@@ -32,8 +32,8 @@ dependencies:
   dio: ^3.0.10
   shared_preferences: ^0.5.12+4
   expandable: ^4.1.4
-  easy_debounce: ^1.0.2
-
+  just_debounce_it: ^3.0.0+2
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
