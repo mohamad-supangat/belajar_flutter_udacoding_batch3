@@ -17,12 +17,17 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/user')->group(function () {
   Route::post('login', '\App\Http\Controllers\UserController@login');
   Route::post('register', '\App\Http\Controllers\UserController@register');
+  
+  // api untuk mendapatkan detail user
+  Route::middleware('auth:api')
+    ->get('auth', function (Request $request) {
+      return $request->user();
+    });
 
-  Route::middleware('auth:api')->get('auth', function (Request $request) {
-    return $request->user();
-  });
-  Route::get('logout', '\App\Http\Controllers\UserController@logout')
-    ->middleware('auth:api');
+  Route::middleware('auth:api')
+    ->post('update_profile', '\App\Http\Controllers\UserController@update_profile');
+  Route::middleware('auth:api')
+    ->get('logout', '\App\Http\Controllers\UserController@logout');
 });
 
 Route::get('/news', '\App\Http\Controllers\NewsController@get');

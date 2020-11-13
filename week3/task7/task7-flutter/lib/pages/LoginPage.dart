@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
           jsonEncode(response.data['user']).toString(),
         );
         // pindahkan page ke dashboard
-        Navigator.pushReplacementNamed(context, '/dashboard');
+        Navigator.pushReplacementNamed(context, '/myProfile');
       }
     });
     setState(() => _isLoading = false);
@@ -198,8 +198,8 @@ class _LoginPageState extends State<LoginPage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              onPressed: () =>
-                                  Navigator.pushNamed(context, '/register'),
+                              onPressed: () => Navigator.of(context)
+                                  .pushReplacementNamed('/register'),
                               child: Text(
                                 'Daftar',
                                 style: TextStyle(color: Colors.blue),

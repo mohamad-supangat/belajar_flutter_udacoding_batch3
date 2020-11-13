@@ -23,6 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _confirmationPasswordController =
       TextEditingController();
 
+  // fungsi untuk membuat pesan validasi
   _validatior({arg, name}) {
     if (arg == '')
       return '$name tidak boleh kosong';
@@ -52,9 +53,6 @@ class _RegisterPageState extends State<RegisterPage> {
           type: response.data['status'] ? 'success' : 'error',
           message: response.data['message'],
         );
-        if (response.data['status']) {
-          Navigator.pushNamed(context, '/login');
-        }
       });
       setState(() => _isLoading = false);
     }
@@ -223,8 +221,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          onPressed: () =>
-                              Navigator.pushNamed(context, '/login'),
+                          onPressed: () => Navigator.of(context)
+                              .pushReplacementNamed('/login'),
                           child: Text(
                             'Masuk',
                             style: TextStyle(color: Colors.blue),

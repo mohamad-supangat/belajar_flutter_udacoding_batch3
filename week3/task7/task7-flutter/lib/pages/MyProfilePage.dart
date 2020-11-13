@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/User.dart';
 import '../helpers/auth.dart';
+import '../helpers/api.dart';
+import '../helpers/toast.dart';
 import '../config.dart';
 
 class MyProfilePage extends StatefulWidget {
@@ -11,7 +13,12 @@ class MyProfilePage extends StatefulWidget {
 class _MyProfilePageState extends State<MyProfilePage> {
   bool _obsecurePassword = true;
   User _user;
-  Map<String, TextEditingController> _textController = {};
+
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -19,146 +26,239 @@ class _MyProfilePageState extends State<MyProfilePage> {
     super.initState();
   }
 
+  // fungsi untuk membuat pesan validasi
+  _validatior({arg, name}) {
+    if (arg == '')
+      return '$name tidak boleh kosong';
+    else if (arg.length < 3)
+      return '$name harus lebih dari 5 karakter';
+    else
+      return null;
+  }
+
   // dapatkan user dari class auth helper
   void _getUserState() async {
     User user = await Auth().user();
     setState(() => {_user = user});
+
+    // set kedalam form text controller
+    _nameController.text = user.name;
+    _usernameController.text = user.username;
+    _emailController.text = user.email;
+  }
+
+  // save profile
+  void _saveProses() {
+    // cek validasi form
+    if (_formKey.currentState.validate()) {
+      // call prosess api
+      callApi().post('/user/update_profile', data: {
+        'username': _usernameController.text,
+        'name': _nameController.text,
+        'email': _emailController.text,
+        'password': _passwordController.text,
+      }).then((response) {
+        showToast(
+          type: response.data['status'] ? 'success' : 'error',
+          message: response.data['message'],
+        );
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ProfilePicture(
-              url: 'asdasdasd',
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 30,
-              ),
-              child: Column(
-                children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            controller: _textController['name'],
-                            decoration: InputDecoration(
-                              labelText: "Nama Lengkap",
-                            ),
-                          ),
-                          TextFormField(
-                            controller: _textController['username'],
-                            decoration: InputDecoration(
-                              labelText: "Username",
-                            ),
-                          ),
-                          TextFormField(
-                            keyboardType: TextInputType.emailAddress,
-                            controller: _textController['email'],
-                            decoration: InputDecoration(
-                              labelText: "Email",
-                            ),
-                          ),
-                          TextFormField(
-                            controller: _textController['password'],
-                            obscureText: this._obsecurePassword,
-                            decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  Icons.remove_red_eye,
-                                  color: !this._obsecurePassword
-                                      ? Colors.red
-                                      : Colors.grey,
-                                ),
-                                onPressed: () {
-                                  setState(() => this._obsecurePassword =
-                                      !this._obsecurePassword);
-                                },
-                              ),
-                              labelText: 'Password',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+      floatingActionButton: Visibility(
+        visible: _user != null,
+        child: FloatingActionButton(
+          onPressed: () => _saveProses(),
+          child: Icon(Icons.save),
         ),
       ),
-    );
-  }
-}
-
-class ProfilePicture extends StatefulWidget {
-  final url;
-  ProfilePicture({this.url});
-  @override
-  _ProfilePictureState createState() => _ProfilePictureState();
-}
-
-// rouded foto profile
-class _ProfilePictureState extends State<ProfilePicture> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Stack(
+      body: (() {
+        // tampilkan progress loading ketika varible user belum mendapatkan data
+        if (_user == null) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 150,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.blueGrey[400],
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: widget.url == null
-                          ? AssetImage('assets/images/default-user.png')
-                          : NetworkImage(config()['baseUrl'] + widget.url),
-                    ),
-                  ),
+                CircularProgressIndicator(),
+                SizedBox(
+                  height: 20,
                 ),
-                Positioned.fill(
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: RawMaterialButton(
-                      onPressed: () {},
-                      elevation: 2.0,
-                      fillColor: Colors.white,
-                      child: Icon(
-                        Icons.edit,
-                        size: 15.0,
-                      ),
-                      padding: EdgeInsets.all(5.0),
-                      shape: CircleBorder(),
-                    ),
-                  ),
-                )
+                Text('Sedang memuat data profile'),
               ],
             ),
-            SizedBox(
-              height: 10,
+          );
+        } else {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                _generateHeaderAndProfilePicture(
+                  url: null,
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 30,
+                  ),
+                  child: Column(
+                    children: [
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Form(
+                          key: _formKey,
+                          child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  controller: _nameController,
+                                  validator: (String arg) => _validatior(
+                                      arg: arg, name: 'Nama Lengkap'),
+                                  decoration: InputDecoration(
+                                      labelText: 'Nama Lengkap *'),
+                                ),
+                                TextFormField(
+                                  controller: _usernameController,
+                                  validator: (String arg) =>
+                                      _validatior(arg: arg, name: 'Username'),
+                                  decoration:
+                                      InputDecoration(labelText: 'Username'),
+                                ),
+                                TextFormField(
+                                  controller: _emailController,
+                                  validator: (String arg) =>
+                                      _validatior(arg: arg, name: 'Email'),
+                                  keyboardType: TextInputType.emailAddress,
+                                  decoration:
+                                      InputDecoration(labelText: 'E-mail'),
+                                ),
+                                TextFormField(
+                                  obscureText: this._obsecurePassword,
+                                  controller: _passwordController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Password',
+                                    helperText:
+                                        'Masukan password baru untuk mengganti / biarkan kosong agar tidak merubah password',
+                                    suffixIcon: IconButton(
+                                      icon: Icon(
+                                        Icons.remove_red_eye,
+                                        color: !this._obsecurePassword
+                                            ? Colors.blue
+                                            : Colors.grey,
+                                      ),
+                                      onPressed: () {
+                                        setState(() => this._obsecurePassword =
+                                            !this._obsecurePassword);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
+          );
+        }
+      }()),
+    );
+  }
+
+  Widget _generateHeaderAndProfilePicture({url}) {
+    return Stack(
+      children: [
+        Image.asset(
+          'assets/images/image843.png',
+          fit: BoxFit.cover,
         ),
-      ),
+        SafeArea(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FlatButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: Icon(Icons.arrow_back),
+                    label: Text('Kembali'),
+                  ),
+                  FlatButton.icon(
+                    onPressed: () async {
+                      bool status = await Auth().logout();
+                      if (status) {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/news',
+                          (Route<dynamic> route) => false,
+                        );
+                      }
+                    },
+                    icon: Icon(Icons.logout),
+                    label: Text('Keluar'),
+                  )
+                ],
+              ),
+              Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Stack(
+                      children: [
+                        Container(
+                          width: 150,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey[400],
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: url == null
+                                  ? AssetImage('assets/images/default-user.png')
+                                  : NetworkImage(config()['baseUrl'] + url),
+                            ),
+                          ),
+                        ),
+                        Positioned.fill(
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: RawMaterialButton(
+                              onPressed: () {},
+                              elevation: 2.0,
+                              fillColor: Colors.white,
+                              child: Icon(
+                                Icons.edit,
+                                size: 15.0,
+                              ),
+                              padding: EdgeInsets.all(5.0),
+                              shape: CircleBorder(),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }
