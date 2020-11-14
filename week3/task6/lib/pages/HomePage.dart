@@ -3,6 +3,7 @@ import 'package:responsive_grid/responsive_grid.dart';
 import 'package:refresh_loadmore/refresh_loadmore.dart';
 import 'package:dio/dio.dart';
 
+import '../pages/DetailPage.dart';
 import '../models/Category.dart';
 import '../models/Photo.dart';
 import '../db/categorys.dart';
@@ -117,7 +118,14 @@ class _HomePageState extends State<HomePage> {
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(8),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailPage(photo),
+                        ),
+                      );
+                    },
                     child: Container(
                       height: 200,
                       child: Image.network(
