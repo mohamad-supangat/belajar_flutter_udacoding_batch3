@@ -1,36 +1,100 @@
 class Photo {
-  String id;
-  String author;
-  int width;
-  int height;
-  String url;
-  String downloadUrl;
+  int id;
+  String pageURL;
+  String type;
+  String tags;
+  String previewURL;
+  int previewWidth;
+  int previewHeight;
+  String webformatURL;
+  int webformatWidth;
+  int webformatHeight;
+  String largeImageURL;
+  int imageWidth;
+  int imageHeight;
+  int imageSize;
+  int views;
+  int downloads;
+  int favorites;
+  int likes;
+  int comments;
+  int userId;
+  String user;
+  String userImageURL;
 
   Photo(
       {this.id,
-      this.author,
-      this.width,
-      this.height,
-      this.url,
-      this.downloadUrl});
+      this.pageURL,
+      this.type,
+      this.tags,
+      this.previewURL,
+      this.previewWidth,
+      this.previewHeight,
+      this.webformatURL,
+      this.webformatWidth,
+      this.webformatHeight,
+      this.largeImageURL,
+      this.imageWidth,
+      this.imageHeight,
+      this.imageSize,
+      this.views,
+      this.downloads,
+      this.favorites,
+      this.likes,
+      this.comments,
+      this.userId,
+      this.user,
+      this.userImageURL});
 
   Photo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    author = json['author'];
-    width = json['width'];
-    height = json['height'];
-    url = json['url'];
-    downloadUrl = json['download_url'];
+    pageURL = json['pageURL'];
+    type = json['type'];
+    tags = json['tags'];
+    previewURL = json['previewURL'];
+    previewWidth = json['previewWidth'];
+    previewHeight = json['previewHeight'];
+    webformatURL = json['webformatURL'];
+    webformatWidth = json['webformatWidth'];
+    webformatHeight = json['webformatHeight'];
+    largeImageURL = json['largeImageURL'];
+    imageWidth = json['imageWidth'];
+    imageHeight = json['imageHeight'];
+    imageSize = json['imageSize'];
+    views = json['views'];
+    downloads = json['downloads'];
+    favorites = json['favorites'];
+    likes = json['likes'];
+    comments = json['comments'];
+    userId = json['user_id'];
+    user = json['user'];
+    userImageURL = json['userImageURL'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['author'] = this.author;
-    data['width'] = this.width;
-    data['height'] = this.height;
-    data['url'] = this.url;
-    data['download_url'] = this.downloadUrl;
+    data['pageURL'] = this.pageURL;
+    data['type'] = this.type;
+    data['tags'] = this.tags;
+    data['previewURL'] = this.previewURL;
+    data['previewWidth'] = this.previewWidth;
+    data['previwHeight'] = this.previewHeight;
+    data['webformatURL'] = this.webformatURL;
+    data['webformatWidth'] = this.webformatWidth;
+    data['webformatHeight'] = this.webformatHeight;
+    data['largeImageURL'] = this.largeImageURL;
+    data['imageWidth'] = this.imageWidth;
+    data['imageHeight'] = this.imageHeight;
+    data['imageSize'] = this.imageSize;
+    data['views'] = this.views;
+    data['downloads'] = this.downloads;
+    data['favorites'] = this.favorites;
+    data['likes'] = this.likes;
+    data['comments'] = this.comments;
+    data['user_id'] = this.userId;
+    data['user'] = this.user;
+    data['userImageURL'] = this.userImageURL;
     return data;
   }
 }

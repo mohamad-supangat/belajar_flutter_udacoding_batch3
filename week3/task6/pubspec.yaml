@@ -30,10 +30,11 @@ dependencies:
   cupertino_icons: ^1.0.0
   responsive_grid: ^1.2.0
   fluttertoast: ^7.1.1
-  http: ^0.12.2 
+  dio: ^3.0.10
+  just_debounce_it: ^3.0.0+2
   shared_preferences: ^0.5.12+4
-  lazy_load_scrollview: ^1.1.0
-
+  refresh_loadmore: ^1.1.1
+ 
 
 dev_dependencies:
   flutter_test:
