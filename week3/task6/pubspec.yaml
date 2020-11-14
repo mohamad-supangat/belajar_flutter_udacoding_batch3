@@ -34,7 +34,9 @@ dependencies:
   just_debounce_it: ^3.0.0+2
   shared_preferences: ^0.5.12+4
   refresh_loadmore: ^1.1.1
- 
+  wallpaper_manager: ^1.0.10
+  flutter_cache_manager: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +86,6 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
 flutter_icons:
-  image_path: 'assets/images/task4/logo.png'
+  image_path: 'ic_launcher.png'
   android: true
   ios: true

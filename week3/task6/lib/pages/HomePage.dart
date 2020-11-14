@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Udacoding',
+              'Uda',
               style: TextStyle(
                 fontWeight: FontWeight.w900,
               ),

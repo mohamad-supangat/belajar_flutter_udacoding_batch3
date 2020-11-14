@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:wallpaper_manager/wallpaper_manager.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import '../models/Photo.dart';
 
 class DetailPage extends StatefulWidget {
@@ -11,10 +12,18 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  String res;
+  bool downloading = false;
+  String home = "Home Screen",
+      lock = "Lock Screen",
+      both = "Both Screen",
+      system = "System";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        onPressed: _setAsWallpaper,
         backgroundColor: Colors.blue,
         child: Icon(
           Icons.format_paint,
@@ -49,7 +58,7 @@ class _DetailPageState extends State<DetailPage> {
                 children: [
                   Row(
                     children: [
-                      Text('Di Upload Oleh: '),
+                      Text('Di upload oleh: '),
                       Text(
                         '@${widget.photo.user}',
                         style: TextStyle(
@@ -97,6 +106,59 @@ class _DetailPageState extends State<DetailPage> {
                 ],
               ),
             ),
+          ),
+          Visibility(
+            visible: downloading,
+            child: Dialog(
+              child: Container(
+                width: 200.0,
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    CircularProgressIndicator(),
+                    SizedBox(height: 20.0),
+                    Container(
+                      child: Text(
+                        "Mendownload foto dan menerapkan wallpaper",
+                        style: TextStyle(color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  void _setAsWallpaper() async {
+    setState(() => downloading = true);
+    int location = WallpaperManager.HOME_SCREEN;
+    var file =
+        await DefaultCacheManager().getSingleFile(widget.photo.largeImageURL);
+
+    final String result =
+        await WallpaperManager.setWallpaperFromFile(file.path, location);
+
+    setState(() => downloading = false);
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(result == 'Wallpaper set'
+            ? 'Wallpaper diterapkan'
+            : 'Gagal Menerapkan wallpaper'),
+        actions: [
+          FlatButton(
+            child: Text('Tutup'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           )
         ],
       ),
