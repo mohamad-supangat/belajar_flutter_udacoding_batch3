@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
 import '../db/Intro.dart';
@@ -10,76 +9,63 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+  final introKey = GlobalKey<IntroductionScreenState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Swiper.children(
-        index: 0,
-        autoplay: false,
-        loop: false,
-        pagination: SwiperPagination(
-          margin: EdgeInsets.only(bottom: 100),
-          builder: DotSwiperPaginationBuilder(
-            color: Colors.grey,
-            activeColor: Colors.red,
-            size: 5,
-            activeSize: 8,
+      body: IntroductionScreen(
+        key: introKey,
+        pages: _buildOnboarding(),
+        onDone: () => _onIntroEnd(context),
+        //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
+        showSkipButton: true,
+        skipFlex: 0,
+        nextFlex: 0,
+        skip: const Text('Skip'),
+        next: const Icon(Icons.arrow_forward),
+        done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
+        dotsDecorator: const DotsDecorator(
+          size: Size(10.0, 10.0),
+          color: Color(0xFFBDBDBD),
+          activeSize: Size(22.0, 10.0),
+          activeColor: Colors.red,
+          activeShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(25.0)),
           ),
         ),
-        control: SwiperControl(
-          iconNext: null,
-          iconPrevious: null,
-        ),
-        children: _buildOnboarding(),
       ),
     );
   }
 
+  void _onIntroEnd(context) {
+    // Navigator.of(context).push(
+    //     // MaterialPageRoute(builder: (_) => HomePage()),
+    //     );
+  }
+
   List _buildOnboarding() {
     return dbIntroOnboarding.map((intro) {
-      return Container(
-        padding: EdgeInsets.all(30),
-        child: ListView(
-          children: [
-            Container(
-              child: Image.asset(
-                intro.image,
-                fit: BoxFit.contain,
-                height: MediaQuery.of(context).size.height / 3.5,
-              ),
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            Center(
-              child: Text(
-                intro.title,
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: Center(
-                child: Text(
-                  intro.descrtiption,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 20,
-                    // wordSpacing: 3,
-                  ),
-                ),
-              ),
-            )
-          ],
+      return PageViewModel(
+        title: intro.title,
+        image: Align(
+          child: Image.asset(intro.image, width: 200),
+          alignment: Alignment.bottomCenter,
+        ),
+        decoration: PageDecoration(
+          titleTextStyle: TextStyle(
+            fontSize: 28.0,
+            fontWeight: FontWeight.w700,
+            // color: Colors.red,
+          ),
+          bodyTextStyle: TextStyle(fontSize: 12),
+          descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+          pageColor: Colors.white,
+          imagePadding: EdgeInsets.zero,
+        ),
+        bodyWidget: Text(
+          intro.descrtiption,
+          textAlign: TextAlign.center,
         ),
       );
     }).toList();

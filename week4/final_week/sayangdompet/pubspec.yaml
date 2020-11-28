@@ -30,7 +30,6 @@ dependencies:
   cupertino_icons: ^1.0.0
   shared_preferences: ^0.5.12+4
   dio: ^3.0.10
-  flutter_swiper: ^1.1.6
   introduction_screen: ^1.0.9
 
 
