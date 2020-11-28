@@ -21,7 +21,8 @@ class UserController extends Controller
     ]);
 
     $credentials = request(['username', 'password']);
-    if (!$token = auth()->attempt($credentials)) {
+    /* dd($request->remember); */
+    if (!$token = auth()->attempt($credentials, $request->remember ? true : false)) {
       return response()->json([
         'status'  => false,
         'message' => 'Username / password yang anda masukan salah',
@@ -87,9 +88,9 @@ class UserController extends Controller
   public function update_profile(Request $request)
   {
     $request->validate([
-      'username'    => 'required|min:5|max:20|unique:users,username,'.\Auth::id(),
+      'username'    => 'required|min:5|max:20|unique:users,username,' . \Auth::id(),
       'name'        => 'required|min:5|max:50',
-      'email'       => 'required|min:5|max:50|unique:users,email,'.\Auth::id().'|email:filter',
+      'email'       => 'required|min:5|max:50|unique:users,email,' . \Auth::id() . '|email:filter',
       'password'    => 'nullable|min:5|max:20',
     ]);
 
@@ -108,4 +109,4 @@ class UserController extends Controller
       'message'     => $proses ? 'Sukes mengupdate profile' : 'Gagal melakukan perubahan',
     ]);
   }
-} 
+}
