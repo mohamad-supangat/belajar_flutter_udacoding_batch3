@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import './OnboardingScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -6,6 +8,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    startSplashScreen();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,5 +43,15 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
+  }
+
+  startSplashScreen() async {
+    Duration duration = Duration(seconds: 3);
+    return Timer(duration, () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => OnboardingScreen()),
+      );
+    });
   }
 }

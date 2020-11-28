@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './pages/SplashScreen.dart';
+import './ui/SplashScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,8 +12,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: 'Google Sans',
         // This is the theme of your application.
-        //
         // Try running your application with "flutter run". You'll see the
         // application has a blue toolbar. Then, without quitting the app, try
         // changing the primarySwatch below to Colors.green and then invoke

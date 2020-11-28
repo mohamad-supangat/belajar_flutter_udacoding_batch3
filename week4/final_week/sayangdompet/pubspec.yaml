@@ -31,6 +31,7 @@ dependencies:
   shared_preferences: ^0.5.12+4
   dio: ^3.0.10
   flutter_swiper: ^1.1.6
+  introduction_screen: ^1.0.9
 
 
 dev_dependencies:
@@ -80,4 +81,8 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/images/
- 
+  
+  fonts: 
+    - family: Google Sans
+      fonts:
+        - asset: assets/fonts/GoogleSansRegular.ttf
