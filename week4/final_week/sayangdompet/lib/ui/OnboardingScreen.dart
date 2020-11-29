@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../db/Intro.dart';
+import '../ui/HomeScreen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -22,9 +24,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         showSkipButton: true,
         skipFlex: 0,
         nextFlex: 0,
-        skip: const Text('Skip'),
-        next: const Icon(Icons.arrow_forward),
-        done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
+        skip: Text('Lewati'),
+        next: Icon(Icons.arrow_forward),
+        done: Text('Selesai', style: TextStyle(fontWeight: FontWeight.w600)),
         dotsDecorator: const DotsDecorator(
           size: Size(10.0, 10.0),
           color: Color(0xFFBDBDBD),
@@ -38,10 +40,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  void _onIntroEnd(context) {
-    // Navigator.of(context).push(
-    //     // MaterialPageRoute(builder: (_) => HomePage()),
-    //     );
+  void _onIntroEnd(context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('IntroFinish', true);
+
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => HomeScreen()),
+    );
   }
 
   List _buildOnboarding() {

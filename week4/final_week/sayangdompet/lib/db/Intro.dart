@@ -26,8 +26,8 @@ List<Intro> dbIntroOnboarding = [
   Intro(
     image: 'assets/images/icon.png',
     title: 'Bersama Sayang Dompet',
-    descrtiption: ''''
-        Dengan aplikasi ini diharpkan kamu lebih bisa menyayangi dompet,  mulai dari pencatatan dan pengelompokan
+    descrtiption: '''
+        Dengan aplikasi ini diharapkan kamu lebih bisa menyayangi dompet,  mulai dari pencatatan dan pengelompokan
         Setiap transaksi keluar masuk yang terjadi di dompetmu
         ''',
   ),
