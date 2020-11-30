@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import './bus.dart';
 import './ui/SplashScreen.dart';
+import './ui/LoginScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,13 +12,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Sayang Dompet',
+      debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
       theme: ThemeData(
         fontFamily: 'Google Sans',
         primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: SplashScreen(),
+      routes: {
+        '/login': (context) => LoginScreen(),
+      },
     );
   }
 }

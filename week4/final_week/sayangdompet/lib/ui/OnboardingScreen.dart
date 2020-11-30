@@ -3,7 +3,6 @@ import 'package:introduction_screen/introduction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../db/Intro.dart';
-import '../ui/HomeScreen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -44,9 +43,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('IntroFinish', true);
 
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => HomeScreen()),
-    );
+    Navigator.of(context).pushReplacementNamed('/login');
   }
 
   List _buildOnboarding() {

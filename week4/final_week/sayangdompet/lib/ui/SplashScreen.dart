@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool introFinish = prefs.getBool('IntroFinish');
 
-    Duration duration = Duration(seconds: 3);
+    Duration duration = Duration(seconds: 5);
     return Timer(duration, () {
       Navigator.pushReplacement(
         context,
