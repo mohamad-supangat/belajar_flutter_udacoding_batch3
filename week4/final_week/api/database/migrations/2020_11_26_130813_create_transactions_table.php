@@ -16,7 +16,7 @@ class CreateTransactionsTable extends Migration
     Schema::create('transactions', function (Blueprint $table) {
       $table->id();
       $table->string('title')->comment('Judul transaksi');
-      $table->text('description')->comment('Deskripsi transaksi / keterangan tambahan');
+      $table->text('description')->nullable()->comment('Deskripsi transaksi / keterangan tambahan');
       $table->enum('type', ['in', 'out'])->default('in')->comment('jenis transaksi masuk / keluar');
       $table->integer('amount')->comment('Jumlah nilai transaksi / uang ');
       $table->foreignId('user_id')->constrained('users');

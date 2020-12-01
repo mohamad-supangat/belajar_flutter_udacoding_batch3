@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import './bus.dart';
-import './ui/SplashScreen.dart';
-import './ui/LoginScreen.dart';
+import './routes/routes.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,10 +19,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SplashScreen(),
-      routes: {
-        '/login': (context) => LoginScreen(),
-      },
+      initialRoute: '/splashScreen',
+      routes: routes,
     );
   }
 }

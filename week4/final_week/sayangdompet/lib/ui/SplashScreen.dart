@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dart:async';
-import './OnboardingScreen.dart';
-import './HomeScreen.dart';
+import '../helpers/auth.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -51,15 +50,15 @@ class _SplashScreenState extends State<SplashScreen> {
   startSplashScreen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool introFinish = prefs.getBool('IntroFinish');
+    String token = await Auth().token();
 
     Duration duration = Duration(seconds: 5);
     return Timer(duration, () {
-      Navigator.pushReplacement(
+      Navigator.pushReplacementNamed(
         context,
-        MaterialPageRoute(
-          builder: (context) =>
-              introFinish == true ? HomeScreen() : OnboardingScreen(),
-        ),
+        introFinish == false
+            ? '/onboarding'
+            : (token == null ? '/login' : '/home'),
       );
     });
   }
