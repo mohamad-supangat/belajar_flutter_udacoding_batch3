@@ -9,11 +9,6 @@ abstract class TransactionEvent extends Equatable {
 
 class GetTransaction extends TransactionEvent {}
 
-class GetMoreTransaction extends TransactionEvent {
-  final int page, limit;
+class GetMoreTransaction extends TransactionEvent {}
 
-  GetMoreTransaction({@required this.page, this.limit});
-
-  @override
-  List<Object> get props => [page, limit];
-}
+class RefreshTransaction extends TransactionEvent {}

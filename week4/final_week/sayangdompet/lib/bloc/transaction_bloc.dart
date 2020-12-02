@@ -24,23 +24,27 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
         if (currentState is TransactionInitial) {
           List<Transaction> transactions =
               await _repository.getTransactions(page: 1);
-          print(transactions);
-          yield TransactionLoaded(transactions: transactions, lastPage: true);
+          yield TransactionLoaded(transactions: transactions, lastPage: false);
           return;
         }
+
         if (currentState is TransactionLoaded) {
+          print('load more data');
+
           List<Transaction> transactions =
               await _repository.getTransactions(page: 1);
-          yield transactions.isEmpty
-              ? currentState.copyWith(lastPage: true)
-              : TransactionLoaded(
-                  transactions: currentState.transactions + transactions,
-                  lastPage: false,
-                );
+          yield TransactionLoaded(
+            transactions: currentState.transactions + transactions,
+            lastPage: false,
+          );
         }
       } catch (_) {
         yield TransactionError();
       }
+    }
+
+    if (event is RefreshTransaction) {
+      print('asdasdasd');
     }
   }
 

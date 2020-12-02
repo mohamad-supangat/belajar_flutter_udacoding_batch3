@@ -42,6 +42,7 @@ dependencies:
   meta: ^1.2.4
   timeline_tile: ^1.0.0 
   flutter_money_formatter: ^0.8.3
+  refresh_loadmore: ^1.1.1
 
 dev_dependencies:
   flutter_test:

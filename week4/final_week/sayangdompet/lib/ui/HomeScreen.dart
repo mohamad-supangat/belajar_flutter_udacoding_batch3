@@ -25,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    // _transactionBloc = BlocProvider.of<TransactionBloc>(context);
   }
 
   @override
@@ -37,8 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: BlocProvider<TransactionBloc>(
         create: (context) => TransactionBloc()..add(GetTransaction()),
-        child: Container(
-          child: SafeArea(
+        child: SafeArea(
+          child: RefreshIndicator(
+            onRefresh: _onRefresh,
             child: _createListTransaction(context),
           ),
         ),
@@ -96,11 +96,17 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  Future<void> _onRefresh() async {
+    // print('asdasdasdasd');
+    TransactionBloc()..add(RefreshTransaction());
+  }
+
   void _onScroll() {
+    print('scroll trigger');
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      _transactionBloc.add(GetTransaction());
+      TransactionBloc().add(GetTransaction());
     }
   }
 
