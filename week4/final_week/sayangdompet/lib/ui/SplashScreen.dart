@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Timer(duration, () {
       Navigator.pushReplacementNamed(
         context,
-        introFinish == false
+        introFinish == null || introFinish == false
             ? '/onboarding'
             : (token == null ? '/login' : '/home'),
       );
