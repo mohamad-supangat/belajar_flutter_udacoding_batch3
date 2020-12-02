@@ -27,7 +27,6 @@ class _TransactionActionState extends State<TransactionAction> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _getCategories();
   }
@@ -149,6 +148,7 @@ class _TransactionActionState extends State<TransactionAction> {
                 itemBuilder: (int index) {
                   final item = _categories[index];
                   return ItemTags(
+                    activeColor: Colors.red,
                     key: Key(index.toString()),
                     index: index, // required
                     title: item,

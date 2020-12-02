@@ -1,3 +1,6 @@
+List<Transaction> transactionFromJson(List transactions) =>
+    List<Transaction>.from(transactions.map((x) => Transaction.fromJson(x)));
+
 class Transaction {
   String title;
   String description;
