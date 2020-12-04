@@ -12,42 +12,50 @@ part 'transaction_event.dart';
 part 'transaction_state.dart';
 
 class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
-  TransactionBloc() : super(TransactionInitial());
+  TransactionBloc() : super(TransactionLoading());
+
+  // @override
+  TransactionState get initialState => TransactionLoading();
 
   TransactionRepository _repository = TransactionRepository();
+  List<Transaction> _transactions = [];
+  bool _isLastPage;
+  int _page = 1;
 
   @override
-  Stream<TransactionState> mapEventToState(TransactionEvent event) async* {
-    final currentState = state;
-    if (event is GetTransaction && !_isLastPage(currentState)) {
+  Stream<TransactionState> mapEventToState(
+    TransactionEvent event,
+  ) async* {
+    if (event is GetTransaction) {
       try {
-        if (currentState is TransactionInitial) {
-          List<Transaction> transactions =
-              await _repository.getTransactions(page: 1);
-          yield TransactionLoaded(transactions: transactions, lastPage: false);
-          return;
+        if (state is TransactionLoaded) {
+          _transactions = (state as TransactionLoaded).transactions;
+          _isLastPage = (state as TransactionLoaded).isLastPage;
         }
 
-        if (currentState is TransactionLoaded) {
-          print('load more data');
-
-          List<Transaction> transactions =
-              await _repository.getTransactions(page: 1);
-          yield TransactionLoaded(
-            transactions: currentState.transactions + transactions,
-            lastPage: false,
-          );
+        if (_isLastPage != null) {
+          yield TransactionMoreLoading();
+        } else {
+          yield TransactionLoading();
         }
+
+        if (_transactions.length == 0 || _isLastPage == null || !_isLastPage) {
+          Map req = await _repository.getTransactions(page: _page);
+          _transactions = (req['transactions']);
+          _isLastPage = req['isLastPage'];
+
+          if (!req['isLastPage']) {
+            _page++;
+          }
+        }
+
+        yield TransactionLoaded(
+          transactions: _transactions,
+          isLastPage: _isLastPage,
+        );
       } catch (_) {
         yield TransactionError();
       }
     }
-
-    if (event is RefreshTransaction) {
-      print('asdasdasd');
-    }
   }
-
-  bool _isLastPage(TransactionState state) =>
-      state is TransactionLoaded && state.lastPage;
 }

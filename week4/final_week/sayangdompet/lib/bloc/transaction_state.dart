@@ -11,23 +11,29 @@ class TransactionInitial extends TransactionState {}
 
 class TransactionLoading extends TransactionState {}
 
-class TransactonMoreLoading extends TransactionState {}
+class TransactionMoreLoading extends TransactionState {}
 
 class TransactionLoaded extends TransactionState {
   final List<Transaction> transactions;
-  final bool lastPage;
+  final bool isLastPage;
 
   const TransactionLoaded({
     @required this.transactions,
-    @required this.lastPage,
+    @required this.isLastPage,
   });
 
-  @override
-  List<Object> get props => [transactions, lastPage];
+  // TransactionLoaded copyWith({
+  //   List<Transaction> transactions,
+  //   bool isLastPage,
+  // }) {
+  //   return TransactionLoaded(
+  //     transactions: transactions ?? this.transactions,
+  //     isLastPage: isLastPage ?? this.isLastPage,
+  //   );
+  // }
 
   @override
-  String toString() =>
-      'PostSuccess { transactions: ${transactions.length}, lastPage: $lastPage }';
+  List<Object> get props => [transactions, isLastPage];
 }
 
 class TransactionError extends TransactionState {}
