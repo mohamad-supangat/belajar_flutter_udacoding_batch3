@@ -55,36 +55,40 @@ class _ListTransactionsState extends State<ListTransactions> {
                 );
               } else {
                 int itemCount = _transactions.length + (_isLastPage ? 0 : 1);
-                return ListView.builder(
-                  itemCount: itemCount,
-                  controller: _scrollController,
-                  itemBuilder: (context, index) {
-                    if (!_isLastPage && index == itemCount - 1) {
-                      return Padding(
-                        padding: EdgeInsets.all(10),
-                        child: () {
-                          if (state is TransactionMoreLoading) {
-                            return Column(
-                              children: [
-                                CircularProgressIndicator(),
-                                SizedBox(height: 7),
-                                Text('Memuat data'),
-                              ],
-                            );
-                          } else {
-                            SizedBox();
-                          }
-                        }(),
-                      );
-                    } else {
-                      return Container(
-                        padding: EdgeInsets.all(10),
-                        child: TransactionWidget(
-                          transaction: _transactions[index],
-                        ),
-                      );
-                    }
-                  },
+                return RefreshIndicator(
+                  onRefresh: _onRefresh,
+                  child: ListView.builder(
+                    itemCount: itemCount,
+                    controller: _scrollController,
+                    itemBuilder: (context, index) {
+                      if (!_isLastPage && index == itemCount - 1) {
+                        return Padding(
+                          padding: EdgeInsets.all(10),
+                          child: () {
+                            if (state is TransactionMoreLoading) {
+                              return Column(
+                                children: [
+                                  CircularProgressIndicator(),
+                                  SizedBox(height: 7),
+                                  Text('Memuat data'),
+                                ],
+                              );
+                            } else {
+                              SizedBox();
+                            }
+                          }(),
+                        );
+                      } else {
+                        return Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: TransactionWidget(
+                            transaction: _transactions[index],
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 );
               }
             } else if (state is TransactionError) {
@@ -106,6 +110,11 @@ class _ListTransactionsState extends State<ListTransactions> {
         !(_bloc.state is TransactionMoreLoading)) {
       _bloc..add(GetTransaction());
     }
+  }
+
+  Future<void> _onRefresh() async {
+    print('Refresh data');
+    _bloc..add(RefreshTransaction());
   }
 }
 

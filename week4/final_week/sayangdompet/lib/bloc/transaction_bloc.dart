@@ -27,35 +27,47 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     TransactionEvent event,
   ) async* {
     if (event is GetTransaction) {
-      try {
-        if (state is TransactionLoaded) {
-          _transactions = (state as TransactionLoaded).transactions;
-          _isLastPage = (state as TransactionLoaded).isLastPage;
-        }
+      yield* getTransaction();
+    }
 
-        if (_isLastPage != null) {
-          yield TransactionMoreLoading();
-        } else {
-          yield TransactionLoading();
-        }
+    if (event is RefreshTransaction) {
+      _transactions = [];
+      _page = 1;
+      _isLastPage = null;
+      yield TransactionLoading();
+      yield* getTransaction();
+    }
+  }
 
-        if (_transactions.length == 0 || _isLastPage == null || !_isLastPage) {
-          Map req = await _repository.getTransactions(page: _page);
-          _transactions = (req['transactions']);
-          _isLastPage = req['isLastPage'];
-
-          if (!req['isLastPage']) {
-            _page++;
-          }
-        }
-
-        yield TransactionLoaded(
-          transactions: _transactions,
-          isLastPage: _isLastPage,
-        );
-      } catch (_) {
-        yield TransactionError();
+  Stream<TransactionState> getTransaction() async* {
+    try {
+      if (state is TransactionLoaded) {
+        _transactions = (state as TransactionLoaded).transactions;
+        _isLastPage = (state as TransactionLoaded).isLastPage;
       }
+
+      if (_isLastPage != null) {
+        yield TransactionMoreLoading();
+      } else {
+        yield TransactionLoading();
+      }
+
+      if (_transactions.length == 0 || _isLastPage == null || !_isLastPage) {
+        Map req = await _repository.getTransactions(page: _page);
+        _transactions = (req['transactions']);
+        _isLastPage = req['isLastPage'];
+
+        if (!req['isLastPage']) {
+          _page++;
+        }
+      }
+
+      yield TransactionLoaded(
+        transactions: _transactions,
+        isLastPage: _isLastPage,
+      );
+    } catch (_) {
+      yield TransactionError();
     }
   }
 }
