@@ -19,4 +19,8 @@ class Transaction extends Model
   {
     return $this->belongsToMany(\App\Models\Category::class);
   }
+  function scopeFilterUser($query)
+  {
+    return $query->where('user_id', auth()->id());
+  }
 }

@@ -40,10 +40,10 @@ class TransactionController extends Controller
     ]);
   }
 
-  public function lists(Request $request)
+  public function lists()
   {
     $transactions = Transaction::orderBy('id', 'DESC')
-      ->where('user_id', auth()->id());
+      ->filterUser();
 
     $transactions = $transactions->simplePaginate(10);
     $transactions->getCollection()->transform(function ($transaction) {
@@ -60,6 +60,21 @@ class TransactionController extends Controller
     return response()->json([
       'status'        => true,
       'transactions'  => $transactions
+    ]);
+  }
+
+
+  public function statistic()
+  {
+
+    $model_total = Transaction::filterUser()->select('amount', 'type')->orderBy('id', 'desc')->get();
+    $total = [
+      'in'      => $model_total->where('type', 'in')->sum('amount'),
+      'out'     => $model_total->where('type', 'out')->sum('amount'),
+    ];
+
+    return response()->json([
+      'total' => $total
     ]);
   }
 }

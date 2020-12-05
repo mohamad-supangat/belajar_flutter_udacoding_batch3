@@ -39,6 +39,7 @@ Route::prefix('/category')->group(function () {
 
 
 Route::prefix('/transaction')->middleware('auth:api')->group(function () {
+  Route::get('statistic', [TransactionController::class, 'statistic']);
   Route::post('action', [TransactionController::class, 'action']);
   Route::get('lists', [TransactionController::class, 'lists']);
 });
