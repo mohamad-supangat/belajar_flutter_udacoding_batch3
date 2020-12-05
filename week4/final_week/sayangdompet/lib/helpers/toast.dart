@@ -3,8 +3,17 @@ import 'package:flutter/material.dart';
 
 void showToast({
   String type,
-  String message,
+  @required String message,
 }) {
+  // Toast.show(
+  //   message,
+  //   context,
+  //   duration: Toast.LENGTH_LONG,
+  //   gravity: Toast.BOTTOM,
+  //   backgroundColor: type == 'error' ? Colors.red : Colors.green,
+  //   textColor: Colors.white,
+  // );
+
   Fluttertoast.showToast(
     msg: message,
     toastLength: Toast.LENGTH_SHORT,

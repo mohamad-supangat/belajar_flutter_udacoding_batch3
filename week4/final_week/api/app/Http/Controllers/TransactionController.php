@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -66,15 +67,30 @@ class TransactionController extends Controller
 
   public function statistic()
   {
+    $transactionModel = function () {
+      return Transaction::filterUser()->orderBy('id', 'desc');
+    };
 
-    $model_total = Transaction::filterUser()->select('amount', 'type')->orderBy('id', 'desc')->get();
     $total = [
-      'in'      => $model_total->where('type', 'in')->sum('amount'),
-      'out'     => $model_total->where('type', 'out')->sum('amount'),
+      'in'      => $transactionModel()->where('type', 'in')->get()->sum('amount'),
+      'out'     => $transactionModel()->where('type', 'out')->get()->sum('amount'),
+    ];
+
+
+    $transactionChartModel = function () use ($transactionModel) {
+      return $transactionModel()
+        ->select([DB::Raw('sum(amount) as amount'), DB::Raw('DATE(created_at) as date')])
+        ->groupBy('date');
+    };
+
+    $chart_data = [
+      'in'        => $transactionChartModel()->where('type', 'in')->get(),
+      'out'       => $transactionChartModel()->where('type', 'out')->get(),
     ];
 
     return response()->json([
-      'total' => $total
+      'total' => $total,
+      'chart' => $chart_data,
     ]);
   }
 }

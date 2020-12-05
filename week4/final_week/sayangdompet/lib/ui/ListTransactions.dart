@@ -149,54 +149,60 @@ class TransactionWidget extends StatelessWidget {
               ),
             ),
             SizedBox(width: 20),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  transaction.title,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    transaction.title,
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height / 45,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  formatRupiah(transaction.amount),
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Tags(
-                  itemCount: transaction.categories.length,
-                  itemBuilder: (int index) {
-                    final item = transaction.categories[index];
-                    return ItemTags(
-                      textStyle: TextStyle(
-                        fontSize: 12,
+                  SizedBox(height: 10),
+                  Flexible(
+                    child: Text(
+                      formatRupiah(transaction.amount),
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.height / 30,
+                        fontWeight: FontWeight.w600,
                       ),
-                      activeColor: Colors.red,
-                      elevation: 0,
-                      key: Key(index.toString()),
-                      index: index, // required
-                      title: item,
-                      pressEnabled: false,
-                    );
-                  },
-                ),
-                SizedBox(height: 10),
-                Text(
-                  transaction.description,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w200,
+                    ),
                   ),
-                )
-              ],
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Tags(
+                    itemCount: transaction.categories.length,
+                    alignment: WrapAlignment.center,
+                    itemBuilder: (int index) {
+                      final item = transaction.categories[index];
+                      return ItemTags(
+                        textStyle: TextStyle(
+                          fontSize: MediaQuery.of(context).size.height / 65,
+                        ),
+                        activeColor: Colors.red,
+                        elevation: 0,
+                        key: Key(index.toString()),
+                        index: index, // required
+                        title: item,
+                        pressEnabled: false,
+                      );
+                    },
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    transaction.description + transaction.description,
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height / 50,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         ),

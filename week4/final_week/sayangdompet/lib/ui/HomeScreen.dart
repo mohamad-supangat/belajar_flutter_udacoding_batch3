@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.analytics),
-            label: 'Detail',
+            label: 'Statistik',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list_alt),
