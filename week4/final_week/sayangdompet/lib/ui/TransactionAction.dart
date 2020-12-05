@@ -56,8 +56,7 @@ class _TransactionActionState extends State<TransactionAction> {
               Row(
                 children: [
                   Expanded(
-                    child: RaisedButton.icon(
-                      elevation: 0,
+                    child: FlatButton.icon(
                       color: Colors.white,
                       textColor: _type == 'in' ? Colors.red : Colors.black,
                       shape: RoundedRectangleBorder(
@@ -74,8 +73,7 @@ class _TransactionActionState extends State<TransactionAction> {
                     width: 20,
                   ),
                   Expanded(
-                    child: RaisedButton.icon(
-                      elevation: 0,
+                    child: FlatButton.icon(
                       color: Colors.white,
                       textColor: _type == 'out' ? Colors.red : Colors.black,
                       shape: RoundedRectangleBorder(
@@ -204,6 +202,9 @@ class _TransactionActionState extends State<TransactionAction> {
                   )
                 ],
               ),
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),

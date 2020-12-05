@@ -22,16 +22,6 @@ class TransactionLoaded extends TransactionState {
     @required this.isLastPage,
   });
 
-  // TransactionLoaded copyWith({
-  //   List<Transaction> transactions,
-  //   bool isLastPage,
-  // }) {
-  //   return TransactionLoaded(
-  //     transactions: transactions ?? this.transactions,
-  //     isLastPage: isLastPage ?? this.isLastPage,
-  //   );
-  // }
-
   @override
   List<Object> get props => [transactions, isLastPage];
 }

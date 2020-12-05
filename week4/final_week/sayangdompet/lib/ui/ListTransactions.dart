@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 
 import 'package:sayangdompet/ui/NoItems.dart';
-import 'package:sayangdompet/ui/TransactionAction.dart';
 import 'package:sayangdompet/models/Transaction.dart';
 import 'package:sayangdompet/bloc/bloc.dart';
 import 'package:sayangdompet/helpers/helpers.dart';
@@ -82,7 +81,6 @@ class _ListTransactionsState extends State<ListTransactions> {
                         padding: EdgeInsets.all(10),
                         child: TransactionWidget(
                           transaction: _transactions[index],
-                          index: index,
                         ),
                       );
                     }
@@ -109,33 +107,14 @@ class _ListTransactionsState extends State<ListTransactions> {
       _bloc..add(GetTransaction());
     }
   }
-
-  void _showModalBottomSheet() {
-    showModalBottomSheet(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
-      ),
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: TransactionAction(),
-        );
-      },
-    );
-  }
 }
 
 class TransactionWidget extends StatelessWidget {
   final Transaction transaction;
-  final int index;
+
   const TransactionWidget({
     Key key,
     @required this.transaction,
-    this.index,
   }) : super(key: key);
 
   @override
@@ -144,53 +123,71 @@ class TransactionWidget extends StatelessWidget {
       margin: EdgeInsets.all(0),
       child: Padding(
         padding: EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              // transaction.title,
-              index.toString(),
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: transaction.type == 'in' ? Colors.green : Colors.blue,
+              ),
+              padding: EdgeInsets.all(10),
+              child: Icon(
+                transaction.type == 'in'
+                    ? Icons.arrow_downward
+                    : Icons.arrow_upward,
+                color: Colors.white,
               ),
             ),
-            SizedBox(height: 10),
-            Text(
-              formatRupiah(transaction.amount),
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Tags(
-              itemCount: transaction.categories.length,
-              itemBuilder: (int index) {
-                final item = transaction.categories[index];
-                return ItemTags(
-                  textStyle: TextStyle(
-                    fontSize: 12,
+            SizedBox(width: 20),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  transaction.title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
                   ),
-                  activeColor: Colors.red,
-                  elevation: 0,
-                  key: Key(index.toString()),
-                  index: index, // required
-                  title: item,
-                  pressEnabled: false,
-                );
-              },
-            ),
-            SizedBox(height: 10),
-            Text(
-              transaction.description,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w200,
-              ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  formatRupiah(transaction.amount),
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Tags(
+                  itemCount: transaction.categories.length,
+                  itemBuilder: (int index) {
+                    final item = transaction.categories[index];
+                    return ItemTags(
+                      textStyle: TextStyle(
+                        fontSize: 12,
+                      ),
+                      activeColor: Colors.red,
+                      elevation: 0,
+                      key: Key(index.toString()),
+                      index: index, // required
+                      title: item,
+                      pressEnabled: false,
+                    );
+                  },
+                ),
+                SizedBox(height: 10),
+                Text(
+                  transaction.description,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w200,
+                  ),
+                )
+              ],
             )
           ],
         ),
