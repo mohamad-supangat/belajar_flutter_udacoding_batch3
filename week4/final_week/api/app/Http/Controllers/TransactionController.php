@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+
 class TransactionController extends Controller
 {
   public function action(Request $request)
@@ -28,12 +29,16 @@ class TransactionController extends Controller
       'user_id'         => auth()->id(),
     ]);
 
+    $categories = [];
     foreach ($request->categories as $category) {
       $categories[] = Category::updateOrCreate([
         'name'    => ucwords(strtolower($category)),
       ])->id;
     }
-    $transaction->categories()->sync($categories);
+
+    if (count($categories) > 0) {
+      $transaction->categories()->sync($categories);
+    }
 
     return response()->json([
       'status'        => $transaction ? true : false,

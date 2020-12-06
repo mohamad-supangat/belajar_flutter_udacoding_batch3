@@ -43,7 +43,7 @@ dependencies:
   flutter_money_formatter: ^0.8.3
   lazy_load_scrollview: ^1.1.0
   fl_chart: ^0.12.0
-
+  event_bus: ^1.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

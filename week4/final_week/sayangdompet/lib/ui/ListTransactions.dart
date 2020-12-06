@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tags/flutter_tags.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:sayangdompet/ui/NoItems.dart';
 import 'package:sayangdompet/models/Transaction.dart';
 import 'package:sayangdompet/bloc/bloc.dart';
 import 'package:sayangdompet/helpers/helpers.dart';
+import 'package:sayangdompet/bus.dart';
 
 class ListTransactions extends StatefulWidget {
   @override
@@ -13,10 +14,10 @@ class ListTransactions extends StatefulWidget {
 }
 
 class _ListTransactionsState extends State<ListTransactions> {
-  final TransactionBloc _bloc = TransactionBloc();
   ScrollController _scrollController = ScrollController();
   List<Transaction> _transactions = [];
   bool _isLastPage = false;
+  TransactionBloc transactionBloc = TransactionBloc();
 
   @override
   void initState() {
@@ -28,12 +29,16 @@ class _ListTransactionsState extends State<ListTransactions> {
           _loadMore();
         }
       });
+
+    eventBus.on<TransactionListRefresh>().listen((event) {
+      _onRefresh();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<TransactionBloc>(
-      create: (context) => _bloc..add(GetTransaction()),
+      create: (context) => transactionBloc..add(GetTransaction()),
       child: SafeArea(
         child: BlocBuilder<TransactionBloc, TransactionState>(
           builder: (context, state) {
@@ -50,7 +55,8 @@ class _ListTransactionsState extends State<ListTransactions> {
               if (_transactions.length == 0) {
                 return Center(
                   child: NoItems(
-                    message: 'Tidak ada item tersedia',
+                    message:
+                        'Tidak ada transaksi tersedia / tarik kebawah untuk refresh transaksi',
                   ),
                 );
               } else {
@@ -106,16 +112,16 @@ class _ListTransactionsState extends State<ListTransactions> {
   }
 
   Future<void> _loadMore() async {
-    if (!(_bloc.state as TransactionLoaded).isLastPage &&
-        !(_bloc.state is TransactionMoreLoading)) {
-      _bloc..add(GetTransaction());
+    if (!(transactionBloc.state as TransactionLoaded).isLastPage &&
+        !(transactionBloc.state is TransactionMoreLoading)) {
+      transactionBloc..add(GetTransaction());
     }
   }
 
   Future<void> _onRefresh() async {
     print('Refresh data');
     _transactions = [];
-    _bloc..add(RefreshTransaction());
+    transactionBloc..add(RefreshTransaction());
   }
 }
 

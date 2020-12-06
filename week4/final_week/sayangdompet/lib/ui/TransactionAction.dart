@@ -4,8 +4,9 @@ import 'package:flutter_tags/flutter_tags.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'dart:async';
 
-import '../helpers/toast.dart';
-import '../helpers/api.dart';
+import 'package:sayangdompet/bus.dart';
+import 'package:sayangdompet/helpers/toast.dart';
+import 'package:sayangdompet/helpers/api.dart';
 
 class TransactionAction extends StatefulWidget {
   @override
@@ -250,6 +251,7 @@ class _TransactionActionState extends State<TransactionAction> {
             );
 
             if (response.data['status']) {
+              eventBus.fire(TransactionListRefresh());
               Timer(Duration(seconds: 1), () {
                 Navigator.pop(context);
               });

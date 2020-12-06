@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:sayangdompet/helpers/helpers.dart';
 import 'package:sayangdompet/ui/NoItems.dart';
+import 'package:sayangdompet/ui/PesanMenarik.dart';
 
 class DetailTransactions extends StatefulWidget {
   @override
@@ -14,9 +15,11 @@ class _DetailTransactionsState extends State<DetailTransactions> {
   Total _total;
   Map<String, List<FlSpot>> _chart = {
     'in': [
-      FlSpot(10, 20),
+      FlSpot(0, 0),
     ],
-    'out': []
+    'out': [
+      FlSpot(0, 0),
+    ]
   };
 
   @override
@@ -54,9 +57,16 @@ class _DetailTransactionsState extends State<DetailTransactions> {
               onRefresh: _getData,
               child: ListView(
                 children: [
+                  PesanMenarik(
+                    totalMasuk: _total.masuk,
+                    totalKeluar: _total.keluar,
+                  ),
+                  SizedBox(height: 20),
                   _detailTotal(),
                   SizedBox(height: 20),
-                  _generateChart(),
+                  _chart['in'].isEmpty || _chart['out'].isEmpty
+                      ? SizedBox()
+                      : _generateChart(),
                 ],
               ),
             ),

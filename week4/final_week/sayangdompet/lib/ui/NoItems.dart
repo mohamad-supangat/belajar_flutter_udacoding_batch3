@@ -23,7 +23,12 @@ class NoItems extends StatelessWidget {
           SizedBox(
             height: 12,
           ),
-          Text(message),
+          Flexible(
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+            ),
+          ),
         ],
       ),
     );
