@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
-import '../helpers/api.dart';
-import '../models/Transaction.dart';
+import 'package:sayangdompet/helpers/helpers.dart';
+import 'package:sayangdompet/models/Transaction.dart';
 
 class TransactionRepository {
   Future<Map> getTransactions({int page, int limit = 10}) async {

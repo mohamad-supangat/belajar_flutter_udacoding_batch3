@@ -114,6 +114,7 @@ class _ListTransactionsState extends State<ListTransactions> {
 
   Future<void> _onRefresh() async {
     print('Refresh data');
+    _transactions = [];
     _bloc..add(RefreshTransaction());
   }
 }
@@ -129,6 +130,9 @@ class TransactionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
       margin: EdgeInsets.all(0),
       child: Padding(
         padding: EdgeInsets.all(20),
@@ -162,6 +166,13 @@ class TransactionWidget extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
+                  Text(
+                    transaction.createdAt,
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height / 60,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                   SizedBox(height: 10),
                   Flexible(
                     child: Text(
@@ -177,7 +188,7 @@ class TransactionWidget extends StatelessWidget {
                   ),
                   Tags(
                     itemCount: transaction.categories.length,
-                    alignment: WrapAlignment.center,
+                    alignment: WrapAlignment.start,
                     itemBuilder: (int index) {
                       final item = transaction.categories[index];
                       return ItemTags(

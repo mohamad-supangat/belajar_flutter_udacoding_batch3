@@ -12,7 +12,13 @@ class DetailTransactions extends StatefulWidget {
 class _DetailTransactionsState extends State<DetailTransactions> {
   bool _isLoading = true;
   Total _total;
-  // ListF<>
+  Map<String, List<FlSpot>> _chart = {
+    'in': [
+      FlSpot(10, 20),
+    ],
+    'out': []
+  };
+
   @override
   void initState() {
     super.initState();
@@ -43,12 +49,13 @@ class _DetailTransactionsState extends State<DetailTransactions> {
       } else {
         return SafeArea(
           child: Container(
+            padding: EdgeInsets.all(10),
             child: RefreshIndicator(
               onRefresh: _getData,
               child: ListView(
                 children: [
                   _detailTotal(),
-                  SizedBox(height: 10),
+                  SizedBox(height: 20),
                   _generateChart(),
                 ],
               ),
@@ -61,6 +68,10 @@ class _DetailTransactionsState extends State<DetailTransactions> {
 
   Widget _generateChart() {
     return Card(
+      elevation: 8,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Padding(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -77,6 +88,7 @@ class _DetailTransactionsState extends State<DetailTransactions> {
               height: 30,
             ),
             Container(
+              padding: EdgeInsets.all(20),
               width: MediaQuery.of(context).size.width * 2,
               child: LineChart(
                 LineChartData(
@@ -95,45 +107,9 @@ class _DetailTransactionsState extends State<DetailTransactions> {
                   borderData: FlBorderData(show: false),
                   lineBarsData: [
                     LineChartBarData(
-                      spots: [
-                        FlSpot(1, 1),
-                        FlSpot(3, 1.5),
-                        FlSpot(5, 1.4),
-                        FlSpot(7, 3.4),
-                        FlSpot(10, 2),
-                        FlSpot(12, 2.2),
-                        FlSpot(13, 1.8),
-                        FlSpot(1, 1),
-                        FlSpot(3, 1.5),
-                        FlSpot(5, 1.4),
-                        FlSpot(7, 3.4),
-                        FlSpot(10, 2),
-                        FlSpot(12, 2.2),
-                        FlSpot(13, 1.8),
-                        FlSpot(1, 1),
-                        FlSpot(3, 1.5),
-                        FlSpot(5, 1.4),
-                        FlSpot(7, 3.4),
-                        FlSpot(10, 2),
-                        FlSpot(12, 2.2),
-                        FlSpot(13, 1.8),
-                        FlSpot(1, 1),
-                        FlSpot(3, 1.5),
-                        FlSpot(5, 1.4),
-                        FlSpot(7, 3.4),
-                        FlSpot(10, 2),
-                        FlSpot(12, 2.2),
-                        FlSpot(13, 1.8),
-                        FlSpot(1, 1),
-                        FlSpot(3, 1.5),
-                        FlSpot(5, 1.4),
-                        FlSpot(7, 3.4),
-                        FlSpot(10, 2),
-                        FlSpot(12, 2.2),
-                        FlSpot(300, 1.8),
-                      ],
+                      spots: _chart['in'].toList(),
                       colors: [
-                        const Color(0xff4af699),
+                        Colors.green,
                       ],
                       isCurved: true,
                       // barWidth: 8,
@@ -146,16 +122,9 @@ class _DetailTransactionsState extends State<DetailTransactions> {
                       ),
                     ),
                     LineChartBarData(
-                      spots: [
-                        FlSpot(1, 30),
-                        FlSpot(3, 2.8),
-                        FlSpot(7, 1.2),
-                        FlSpot(10, 2.8),
-                        FlSpot(12, 2.6),
-                        FlSpot(13, 3.9),
-                      ],
+                      spots: _chart['out'].toList(),
                       colors: [
-                        const Color(0xffaa4cfc),
+                        Colors.red,
                       ],
                       isCurved: true,
                       // barWidth: 8,
@@ -167,27 +136,6 @@ class _DetailTransactionsState extends State<DetailTransactions> {
                         show: false,
                       ),
                     ),
-                    LineChartBarData(
-                      spots: [
-                        FlSpot(1, 2.8),
-                        FlSpot(3, 1.9),
-                        FlSpot(6, 3),
-                        FlSpot(10, 1.3),
-                        FlSpot(13, 2.5),
-                      ],
-                      colors: const [
-                        Color(0xff27b6fc),
-                      ],
-                      isCurved: true,
-                      // barWidth: 8,
-                      isStrokeCapRound: true,
-                      dotData: FlDotData(
-                        show: false,
-                      ),
-                      belowBarData: BarAreaData(
-                        show: false,
-                      ),
-                    )
                   ],
                 ),
               ),
@@ -200,6 +148,10 @@ class _DetailTransactionsState extends State<DetailTransactions> {
 
   Widget _detailTotal() {
     return Card(
+      elevation: 8,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Padding(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -342,6 +294,17 @@ class _DetailTransactionsState extends State<DetailTransactions> {
     try {
       Response response = await callApi().get('/transaction/statistic');
       Map data = response.data;
+      List<FlSpot> _tmpChartIn = [];
+      List<FlSpot> _tmpChartOut = [];
+
+      data['chart']['in'].forEach((item) {
+        _tmpChartIn.add(
+            FlSpot(double.parse(item['date']), double.parse(item['amount'])));
+      });
+      data['chart']['out'].forEach((item) {
+        _tmpChartOut.add(
+            FlSpot(double.parse(item['date']), double.parse(item['amount'])));
+      });
 
       setState(() {
         _total = Total(
@@ -349,6 +312,9 @@ class _DetailTransactionsState extends State<DetailTransactions> {
           keluar: data['total']['out'],
           sisa: data['total']['in'] - data['total']['out'],
         );
+
+        _chart['in'] = _tmpChartIn;
+        _chart['out'] = _tmpChartOut;
       });
     } finally {
       setState(() {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sayangdompet/ui/DetailTransactions.dart';
 import 'package:sayangdompet/ui/ListTransactions.dart';
 import 'package:sayangdompet/ui/TransactionAction.dart';
+import 'package:sayangdompet/ui/MyProfile.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,19 +14,27 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _screens = [
     DetailTransactions(),
     ListTransactions(),
+    MyProfile(),
   ];
+
   int _indexScreen = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_indexScreen],
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showModalBottomSheet();
-        },
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: () {
+        if (_indexScreen == 2) {
+          return null;
+        } else {
+          return FloatingActionButton(
+            onPressed: () {
+              _showModalBottomSheet();
+            },
+            child: Icon(Icons.add),
+          );
+        }
+      }(),
       // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
@@ -41,6 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list_alt),
+            label: 'Riwayat',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_box_rounded),
             label: 'Riwayat',
           ),
         ],

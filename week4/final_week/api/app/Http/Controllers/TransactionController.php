@@ -6,7 +6,7 @@ use App\Models\Category;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 class TransactionController extends Controller
 {
   public function action(Request $request)
@@ -43,8 +43,7 @@ class TransactionController extends Controller
 
   public function lists()
   {
-    $transactions = Transaction::orderBy('id', 'DESC')
-      ->filterUser();
+    $transactions = Transaction::filterUser()->orderBy('created_at', 'DESC');
 
     $transactions = $transactions->simplePaginate(10);
     $transactions->getCollection()->transform(function ($transaction) {
@@ -54,7 +53,8 @@ class TransactionController extends Controller
         'type'          => $transaction->type,
         'amount'        => $transaction->amount,
         'categories'    => $transaction->categories->pluck('name'),
-        'created_at'    => $transaction->created_at,
+        // 'created_at'    => $transaction->created_at,
+        'created_at'    => Carbon::parse($transaction->created_at)->format('d M Y h:i'),
         'updated_at'    => $transaction->updated_at,
       ];
     });
@@ -68,7 +68,7 @@ class TransactionController extends Controller
   public function statistic()
   {
     $transactionModel = function () {
-      return Transaction::filterUser()->orderBy('id', 'desc');
+      return Transaction::filterUser();
     };
 
     $total = [
@@ -79,8 +79,9 @@ class TransactionController extends Controller
 
     $transactionChartModel = function () use ($transactionModel) {
       return $transactionModel()
-        ->select([DB::Raw('sum(amount) as amount'), DB::Raw('DATE(created_at) as date')])
-        ->groupBy('date');
+        ->select([DB::Raw('sum(amount) as amount'), DB::Raw("DATE_FORMAT(created_at, '%y%m%d') as date")])
+        ->groupBy('date')
+        ->orderBy('date', 'ASC');
     };
 
     $chart_data = [

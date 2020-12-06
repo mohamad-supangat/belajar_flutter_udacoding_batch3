@@ -5,15 +5,6 @@ void showToast({
   String type,
   @required String message,
 }) {
-  // Toast.show(
-  //   message,
-  //   context,
-  //   duration: Toast.LENGTH_LONG,
-  //   gravity: Toast.BOTTOM,
-  //   backgroundColor: type == 'error' ? Colors.red : Colors.green,
-  //   textColor: Colors.white,
-  // );
-
   Fluttertoast.showToast(
     msg: message,
     toastLength: Toast.LENGTH_SHORT,
