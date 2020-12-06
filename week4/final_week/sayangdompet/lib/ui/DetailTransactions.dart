@@ -4,6 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:sayangdompet/helpers/helpers.dart';
 import 'package:sayangdompet/ui/NoItems.dart';
 import 'package:sayangdompet/ui/PesanMenarik.dart';
+import 'package:sayangdompet/bus.dart';
 
 class DetailTransactions extends StatefulWidget {
   @override
@@ -26,6 +27,9 @@ class _DetailTransactionsState extends State<DetailTransactions> {
   void initState() {
     super.initState();
     _getData();
+    eventBus.on<TransactionListRefresh>().listen((event) {
+      _getData();
+    });
   }
 
   @override

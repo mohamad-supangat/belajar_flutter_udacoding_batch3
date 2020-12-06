@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box_rounded),
-            label: 'Riwayat',
+            label: 'Profile',
           ),
         ],
       ),
