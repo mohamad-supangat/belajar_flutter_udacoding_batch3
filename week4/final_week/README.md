@@ -11,6 +11,13 @@ source code ada di folder `api`
 
 file import database ada di file `api/sayang-dompet.sql`
 
+### default user sample data
+
+`pastikan sudah import file.sql untuk sampledata`
+
+username default tamu : `tamutamu`
+password default tamu : `tamutamu`
+
 ### requirement
 
 - php 7.4 / paling terbaru

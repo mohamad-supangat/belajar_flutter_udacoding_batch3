@@ -31,8 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
                 shape: BoxShape.circle,
                 color: Colors.white,
               ),
+              padding: EdgeInsets.all(20),
               child: Image.asset(
-                'assets/images/icon.png',
+                'assets/images/logo.png',
                 width: 200,
               ),
             ),

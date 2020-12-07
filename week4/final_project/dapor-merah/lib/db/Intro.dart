@@ -2,33 +2,23 @@ import '../models/Intro.dart';
 
 List<Intro> dbIntroOnboarding = [
   Intro(
-    image: 'assets/images/icon.png',
-    title: 'Sudahkah kamu menyayangi dompet sendiri ?',
+    image: 'assets/images/logo.png',
+    title: 'Bingung mau masak apa hari ini ?',
     descrtiption:
-        'Langkah awal sukses adalah dengan anda menyayangi dompet anda',
+        'Disini kamu bisa mendapatkan resep resep yang di bagikan oleh sesama pengguna',
   ),
   Intro(
-    image: 'assets/images/intro1.png',
-    title: 'Seperti Mencatat Transaksi Masuk dan Keluar',
-    descrtiption: '''
-        dengan mencatat transaksi keluar masuk anda nanti tidak akan menyesal
-        ketika di otakmu lupa telah membelanjakan untuk apa uang sebesar itu !
-        ''',
+    image: 'assets/images/logo.png',
+    title: 'Bagikan resep rahasiamu !',
+    descrtiption:
+        '''Jika kamu mempunyai resep rahasia, kamu juga bisa membagikanya dengan yang lain loh, 
+    setiap resep bikinan kamu sendiri''',
   ),
   Intro(
-    image: 'assets/images/intro2.png',
-    title: 'Kelompokan setiap transaksi',
+    image: 'assets/images/logo.png',
+    title: 'Selamat memasak',
     descrtiption: '''
-        Mengelompokan transaksi keluar masuk uang kamu juga menrupakan hal yang penting loh, agar kamu bisa mengelola mana saja
-        pengeluaran yang kurang dibutuhkan agar bisa digunakan secara efisien
-        ''',
-  ),
-  Intro(
-    image: 'assets/images/icon.png',
-    title: 'Bersama Sayang Dompet',
-    descrtiption: '''
-        Dengan aplikasi ini diharapkan kamu lebih bisa menyayangi dompet,  mulai dari pencatatan dan pengelompokan
-        Setiap transaksi keluar masuk yang terjadi di dompetmu
+        Jangan lupa beri kami feedback yah agar layanan kami makin berkembang sesuai dengan kebutuhanmu 😊
         ''',
   ),
 ];

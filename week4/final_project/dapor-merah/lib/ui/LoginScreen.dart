@@ -33,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.all(20),
           child: ListView(
             children: [
+              Image.asset('assets/images/image843.png'),
               SizedBox(height: 50),
               Text(
                 'Masuk',
@@ -50,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   Text(
-                    'Selamat Datang',
+                    'Koki Rumah',
                     style: TextStyle(
                       fontSize: 35,
                       color: Colors.red,
@@ -180,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: EdgeInsets.only(right: 20, left: 20),
                     child: Text(
-                      'Aplikasi submission final week, aplikasi finance | Mohamad Supangat',
+                      'Aplikasi submission final projek aplikasi dapor merah, komunitas sharing resep | Mohamad Supangat',
                       textAlign: TextAlign.center,
                     ),
                   )
