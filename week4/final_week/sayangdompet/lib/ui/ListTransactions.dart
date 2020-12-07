@@ -173,14 +173,14 @@ class TransactionWidget extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
+                  SizedBox(height: 5),
                   Text(
                     transaction.createdAt,
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.height / 60,
+                      fontSize: MediaQuery.of(context).size.height / 70,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(height: 10),
                   Flexible(
                     child: Text(
                       formatRupiah(transaction.amount),
@@ -213,7 +213,7 @@ class TransactionWidget extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    transaction.description + transaction.description,
+                    transaction.description ?? '',
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.height / 50,
                       fontWeight: FontWeight.w200,

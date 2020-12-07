@@ -239,7 +239,7 @@ class _TransactionActionState extends State<TransactionAction> {
           await callApi().post('/transaction/action', data: {
             'title': _titleController.text,
             'type': _type,
-            'amount': _amountController.text,
+            'amount': _amountController.numberValue,
             'description': _descriptionController.text,
             'categories': _categories,
           }).then((response) {
