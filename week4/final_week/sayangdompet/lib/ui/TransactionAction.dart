@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:moneytextformfield/moneytextformfield.dart';
+import 'package:extended_masked_text/extended_masked_text.dart';
+
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'dart:async';
@@ -19,7 +20,10 @@ class _TransactionActionState extends State<TransactionAction> {
 
   String _type = 'in';
   TextEditingController _titleController = TextEditingController();
-  TextEditingController _amountController = TextEditingController();
+  // TextEditingController _amountController = TextEditingController();
+  MoneyMaskedTextController _amountController =
+      MoneyMaskedTextController(leftSymbol: 'Rp. ');
+
   TextEditingController _descriptionController = TextEditingController();
   GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
 
@@ -104,24 +108,19 @@ class _TransactionActionState extends State<TransactionAction> {
                 },
               ),
               SizedBox(height: 5),
-              MoneyTextFormField(
-                settings: MoneyTextFormFieldSettings(
-                  controller: _amountController,
-                  validator: (String arg) {
-                    if (arg == '')
-                      return 'Jumlah Transaksi tidak boleh kosong';
-                    else
-                      return null;
-                  },
-                  appearanceSettings: AppearanceSettings(
-                    labelText: 'Nominal Transaksi *',
-                  ),
-                  moneyFormatSettings: MoneyFormatSettings(
-                    currencySymbol: 'Rp.',
-                    fractionDigits: 0,
-                    amount: 0,
-                  ),
+              TextFormField(
+                controller: _amountController,
+                decoration: InputDecoration(
+                  labelText: 'Nominal Transaksi *',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
+                keyboardType: TextInputType.number,
+                validator: (String arg) {
+                  if (arg == '')
+                    return 'Jumlah Transaksi tidak boleh kosong';
+                  else
+                    return null;
+                },
               ),
               SizedBox(height: 5),
               SimpleAutoCompleteTextField(

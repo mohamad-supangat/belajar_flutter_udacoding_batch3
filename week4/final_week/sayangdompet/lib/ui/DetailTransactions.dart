@@ -68,7 +68,10 @@ class _DetailTransactionsState extends State<DetailTransactions> {
                   SizedBox(height: 20),
                   _detailTotal(),
                   SizedBox(height: 20),
-                  _chart['in'].isEmpty || _chart['out'].isEmpty
+                  _chart['in'].isEmpty ||
+                          _chart['out'].isEmpty ||
+                          _chart['in'].length <= 1 ||
+                          _chart['out'].length <= 1
                       ? SizedBox()
                       : _generateChart(),
                 ],

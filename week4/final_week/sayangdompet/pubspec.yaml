@@ -33,7 +33,9 @@ dependencies:
   introduction_screen: ^1.0.9
   fluttertoast: ^7.1.1
   just_debounce_it: ^3.0.0+2
-  moneytextformfield: ^0.3.5+1
+  # moneytextformfield: ^0.3.5+1
+  # money_field: ^1.0.1
+  extended_masked_text: ^1.0.2
   flutter_tags: ^0.4.9+1
   autocomplete_textfield: ^1.7.3
   flutter_bloc: ^6.1.1
@@ -47,6 +49,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.7.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -96,3 +99,11 @@ flutter:
     - family: Google Sans
       fonts:
         - asset: assets/fonts/GoogleSansRegular.ttf
+
+
+flutter_icons:
+  image_path: 'assets/images/icon.png'
+  android: true
+  ios: true
+
+
