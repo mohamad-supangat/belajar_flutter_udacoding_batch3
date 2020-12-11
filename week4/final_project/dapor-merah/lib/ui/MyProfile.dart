@@ -185,7 +185,10 @@ class _MyProfileState extends State<MyProfile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  FlatButton.icon(
+                  RaisedButton.icon(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                     onPressed: () async {
                       bool status = await Auth().logout();
                       if (status) {
@@ -195,9 +198,11 @@ class _MyProfileState extends State<MyProfile> {
                         );
                       }
                     },
+                    // textColor: Colors.white,
                     icon: Icon(Icons.logout),
                     label: Text('Keluar'),
-                  )
+                  ),
+                  SizedBox(width: 10)
                 ],
               ),
               Center(

@@ -70,7 +70,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             padding: EdgeInsets.all(20),
             child: ListView(
               children: [
-                SizedBox(height: 50),
+                Image.asset('assets/images/image843.png'),
+                // SizedBox(height: 50),
                 Text(
                   'Pendaftaran',
                   style: TextStyle(

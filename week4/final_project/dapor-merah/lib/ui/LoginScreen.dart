@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: ListView(
             children: [
               Image.asset('assets/images/image843.png'),
-              SizedBox(height: 50),
+              // SizedBox(height: 50),
               Text(
                 'Masuk',
                 style: TextStyle(
