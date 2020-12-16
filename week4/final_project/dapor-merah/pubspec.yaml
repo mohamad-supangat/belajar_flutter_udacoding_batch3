@@ -47,7 +47,7 @@ dependencies:
   fl_chart: ^0.12.0
   event_bus: ^1.1.1
   image_picker: ^0.6.7+14
-
+  drag_and_drop_lists: ^0.2.10
 
 dev_dependencies:
   flutter_test:

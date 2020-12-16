@@ -53,6 +53,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             type: response.data['status'] ? 'success' : 'error',
             message: response.data['message'],
           );
+          if (response.data['status']) {
+            Navigator.pushNamed(context, '/login');
+          }
         });
       } finally {
         setState(() => _isLoading = false);
@@ -75,30 +78,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Text(
                   'Pendaftaran',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 30,
                   ),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Hi, ',
-                      style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    Text(
-                      'Selamat Bergabung',
-                      style: TextStyle(
-                        fontSize: 35,
-                        color: Colors.red,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 30,
                 ),
                 TextFormField(
                   controller: _nameController,

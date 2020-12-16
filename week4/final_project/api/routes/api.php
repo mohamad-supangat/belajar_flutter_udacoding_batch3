@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\RecipeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -17,29 +17,28 @@ use App\Http\Controllers\UserController;
 */
 
 Route::prefix('/user')->group(function () {
-  Route::post('login', [UserController::class, 'login']);
-  Route::post('register', [UserController::class, 'register']);
+    Route::post('login', [UserController::class, 'login']);
+    Route::post('register', [UserController::class, 'register']);
 
-  // api untuk mendapatkan detail user
-  Route::middleware('auth:api')
-    ->get('auth', function (Request $request) {
-      return $request->user();
-    });
+    // api untuk mendapatkan detail user
+    Route::middleware('auth:api')
+        ->get('auth', function (Request $request) {
+            return $request->user();
+        });
 
-  Route::middleware('auth:api')
-    ->post('update_profile', [UserController::class, 'update_profile']);
-  Route::middleware('auth:api')
-    ->get('logout', [UserController::class, 'logout']);
+    Route::middleware('auth:api')
+        ->post('update_profile', [UserController::class, 'update_profile']);
+    Route::middleware('auth:api')
+        ->get('logout', [UserController::class, 'logout']);
 });
 
 
 Route::prefix('/category')->group(function () {
-  Route::get('list', [CategoryController::class, 'list']);
+    Route::get('list', [CategoryController::class, 'list']);
 });
 
 
-Route::prefix('/transaction')->middleware('auth:api')->group(function () {
-  Route::get('statistic', [TransactionController::class, 'statistic']);
-  Route::post('action', [TransactionController::class, 'action']);
-  Route::get('lists', [TransactionController::class, 'lists']);
+Route::prefix('/recipe')->middleware('auth:api')->group(function () {
+    Route::post('action', [RecipeController::class, 'action']);
+    Route::get('lists', [RecipeController::class, 'lists']);
 });

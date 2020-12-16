@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:sayangdompet/ui/DetailTransactions.dart';
-import 'package:sayangdompet/ui/ListTransactions.dart';
 import 'package:sayangdompet/ui/MyProfile.dart';
 import 'package:sayangdompet/ui/ReciptAction.dart';
+import 'package:sayangdompet/ui/ListRecipes.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,8 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _screens = [
-    DetailTransactions(),
-    ListTransactions(),
+    ListRecipesPage(),
     MyProfile(),
   ];
 
@@ -48,8 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: _indexScreen,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.analytics),
-            label: 'Statistik',
+            icon: Icon(Icons.list_alt_outlined),
+            label: 'Daftar Resep',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list_alt),

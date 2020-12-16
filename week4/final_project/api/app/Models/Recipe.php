@@ -7,14 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Recipe extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  protected $fillable = [
-    'title', 'description', 'user_id'
-  ];
+    protected $fillable = [
+        'title', 'description', 'user_id', 'image'
+    ];
 
-  function categories()
-  {
-    return $this->belongsToMany(\App\Models\Category::class);
-  }
+    function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    function categories()
+    {
+        return $this->belongsToMany(\App\Models\Category::class);
+    }
+
+    function steps()
+    {
+        return $this->hasMany(RecipeStep::class);
+    }
+
+    function ingredients()
+    {
+        return $this->hasMany(RecipeIngredient::class);
+    }
 }
