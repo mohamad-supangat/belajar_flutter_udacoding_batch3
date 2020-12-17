@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
-import 'package:sayangdompet/helpers/helpers.dart';
-import 'package:sayangdompet/models/Recipe.dart';
+import 'package:DaporMerah/helpers/helpers.dart';
+import 'package:DaporMerah/models/Recipe.dart';
 
 class RecipeRepository {
   Future<Map> getListRecipes({int page, int limit = 10}) async {

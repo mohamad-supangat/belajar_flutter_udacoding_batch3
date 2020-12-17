@@ -7,9 +7,9 @@ import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 
-import 'package:sayangdompet/bus.dart';
-import 'package:sayangdompet/helpers/toast.dart';
-import 'package:sayangdompet/helpers/api.dart';
+import 'package:DaporMerah/bus.dart';
+import 'package:DaporMerah/helpers/toast.dart';
+import 'package:DaporMerah/helpers/api.dart';
 
 class ReciptAction extends StatefulWidget {
   @override

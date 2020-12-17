@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:sayangdompet/components/NoItems.dart';
-import 'package:sayangdompet/models/Recipe.dart';
-import 'package:sayangdompet/bloc/bloc.dart';
+import 'package:DaporMerah/components/NoItems.dart';
+import 'package:DaporMerah/models/Recipe.dart';
+import 'package:DaporMerah/bloc/bloc.dart';
+import 'package:DaporMerah/ui/DetailRecipe.dart';
 
-import 'package:sayangdompet/bus.dart';
+import 'package:DaporMerah/bus.dart';
 
 class ListRecipesPage extends StatefulWidget {
   @override
@@ -137,23 +138,41 @@ class RecipeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        elevation: 5,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        margin: EdgeInsets.all(0),
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      margin: EdgeInsets.all(0),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  DetailRecipePage(recipe: recipe),
+            ),
+          );
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              color: Colors.grey[300],
-              width: double.infinity,
-              height: 150,
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: Image.network(recipe.image),
-              ),
-            ),
+            () {
+              if (recipe.image == null) {
+                return SizedBox();
+              }
+              {
+                return Container(
+                  color: Colors.grey[300],
+                  width: double.infinity,
+                  height: 150,
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: Image.network(recipe.image),
+                  ),
+                );
+              }
+            }(),
             Padding(
               padding: EdgeInsets.all(20),
               child: Column(
@@ -192,6 +211,8 @@ class RecipeWidget extends StatelessWidget {
               ),
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

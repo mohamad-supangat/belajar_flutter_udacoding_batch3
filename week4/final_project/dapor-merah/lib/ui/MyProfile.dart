@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:sayangdompet/models/User.dart';
-import 'package:sayangdompet/helpers/helpers.dart';
-import 'package:sayangdompet/config.dart';
-import 'package:sayangdompet/repositories/user_repository.dart';
+import 'package:DaporMerah/models/User.dart';
+import 'package:DaporMerah/helpers/helpers.dart';
+import 'package:DaporMerah/config.dart';
+import 'package:DaporMerah/repositories/user_repository.dart';
 
 class MyProfile extends StatefulWidget {
   @override

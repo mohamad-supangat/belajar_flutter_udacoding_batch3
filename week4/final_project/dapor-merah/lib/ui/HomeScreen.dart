@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:sayangdompet/ui/MyProfile.dart';
-import 'package:sayangdompet/ui/ReciptAction.dart';
-import 'package:sayangdompet/ui/ListRecipes.dart';
+import 'package:DaporMerah/ui/MyProfile.dart';
+import 'package:DaporMerah/ui/ReciptAction.dart';
+import 'package:DaporMerah/ui/ListRecipes.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

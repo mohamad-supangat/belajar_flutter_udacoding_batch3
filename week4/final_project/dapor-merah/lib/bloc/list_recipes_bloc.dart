@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:sayangdompet/models/Recipe.dart';
-import 'package:sayangdompet/repositories/recipe_repository.dart';
+import 'package:DaporMerah/models/Recipe.dart';
+import 'package:DaporMerah/repositories/recipe_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'list_recipes_event.dart';

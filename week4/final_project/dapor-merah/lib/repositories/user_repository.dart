@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
-import 'package:sayangdompet/helpers/helpers.dart';
-import 'package:sayangdompet/models/User.dart';
+import 'package:DaporMerah/helpers/helpers.dart';
+import 'package:DaporMerah/models/User.dart';
 
 class UserRepository {
   static Future<User> getUserAuth() async {
