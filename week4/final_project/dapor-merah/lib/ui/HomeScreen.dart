@@ -51,10 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Daftar Resep',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt),
-            label: 'Riwayat',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.account_box_rounded),
             label: 'Profile',
           ),
