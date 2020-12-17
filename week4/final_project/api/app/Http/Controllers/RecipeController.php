@@ -79,7 +79,7 @@ class RecipeController extends Controller
             return [
                 'id'            => $recipe->id,
                 'title'         => $recipe->title,
-                'image'         => $recipe->image,
+                'image'         => $recipe->image != null ? url('uploads', $recipe->image) : null,
                 'created_by'    => $recipe->user->name,
                 'categories'    => $recipe->categories->pluck('name'),
                 'description'   => $recipe->description,
@@ -87,6 +87,11 @@ class RecipeController extends Controller
                 'steps'         => $recipe->steps()->orderBy('id', 'ASC')->get()->pluck('step'),
             ];
         });
-        return $paginateData;
+
+
+        return response()->json([
+            'status'    => true,
+            'recipes'   => $paginateData
+        ]);
     }
 }

@@ -14,7 +14,6 @@ part 'transaction_state.dart';
 class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   TransactionBloc() : super(TransactionLoading());
 
-  // @override
   TransactionState get initialState => TransactionLoading();
 
   TransactionRepository _repository = TransactionRepository();

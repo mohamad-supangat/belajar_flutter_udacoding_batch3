@@ -6,3 +6,9 @@ abstract class ListRecipesEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class GetListRecipes extends ListRecipesEvent {}
+
+class GetMoreListRecipes extends ListRecipesEvent {}
+
+class RefreshListRecipes extends ListRecipesEvent {}

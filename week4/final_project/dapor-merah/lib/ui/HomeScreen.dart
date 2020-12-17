@@ -26,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return null;
         } else {
           return FloatingActionButton(
+            heroTag: 'newRecipe',
             onPressed: () {
               Navigator.push(
                 context,

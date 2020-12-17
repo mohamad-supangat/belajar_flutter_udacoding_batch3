@@ -70,6 +70,7 @@ class _MyProfileState extends State<MyProfile> {
       floatingActionButton: Visibility(
         visible: _user != null,
         child: FloatingActionButton(
+          heroTag: 'myProfile',
           onPressed: () => _saveProses(),
           child: Icon(Icons.save),
         ),

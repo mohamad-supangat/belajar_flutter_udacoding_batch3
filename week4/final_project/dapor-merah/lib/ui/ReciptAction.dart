@@ -399,7 +399,7 @@ class _ReciptActionState extends State<ReciptAction> {
             );
 
             if (response.data['status']) {
-              eventBus.fire(TransactionListRefresh());
+              eventBus.fire(RecipeListRefresh());
               Timer(Duration(seconds: 1), () {
                 Navigator.pop(context);
               });

@@ -4,7 +4,7 @@ import 'package:event_bus/event_bus.dart';
 // eventbuss
 EventBus eventBus = EventBus();
 
-class TransactionListRefresh {}
+class RecipeListRefresh {}
 
 // digunakan untuk penempatan beberapa global variable
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();

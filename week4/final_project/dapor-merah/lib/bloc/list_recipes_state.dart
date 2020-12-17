@@ -9,19 +9,21 @@ abstract class ListRecipesState extends Equatable {
 
 class ListRecipesInitial extends ListRecipesState {}
 
+class ListRecipesLoading extends ListRecipesState {}
+
 class ListRecipesMoreLoading extends ListRecipesState {}
 
-class ListRecipesLoaded extends TransactionState {
-  final List<Transaction> transactions;
+class ListRecipesLoaded extends ListRecipesState {
+  final List<Recipe> recipes;
   final bool isLastPage;
 
-  const TransactionLoaded({
-    @required this.transactions,
-    @required this.isLastPage,
+  ListRecipesLoaded({
+    @required this.recipes,
+    this.isLastPage,
   });
 
   @override
-  List<Object> get props => [transactions, isLastPage];
+  List<Object> get props => [recipes, isLastPage];
 }
 
-class ListRecipesError extends TransactionState {}
+class ListRecipesError extends ListRecipesState {}
