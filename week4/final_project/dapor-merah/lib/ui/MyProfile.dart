@@ -218,12 +218,19 @@ class _MyProfileState extends State<MyProfile> {
                           width: 150,
                           height: 150,
                           decoration: BoxDecoration(
-                            color: Colors.blueGrey[400],
+                            color: Colors.white,
                             shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                offset: Offset(0.0, 1.0), //(x,y)
+                                blurRadius: 6.0,
+                              ),
+                            ],
                             image: DecorationImage(
                               fit: BoxFit.fill,
                               image: url == null
-                                  ? AssetImage('assets/images/default-user.png')
+                                  ? AssetImage('assets/images/logo.png')
                                   : NetworkImage(config()['baseUrl'] + url),
                             ),
                           ),
